@@ -1,0 +1,340 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Page</title>
+  <!-- Link style.css here-->
+ 
+
+  <!-- link fontawesome -->
+  <link href="./fontawesome-free-5.15.4-web/" rel="stylesheet">
+
+  <!-- link bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" />
+  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+  <style>
+    #booktickets,
+    #cancel {
+      border-radius: 10px;
+      border: none;
+      color: #ffffff;
+      text-align: center;
+      font-size: 25px;
+      padding: 15px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    section{
+    background-image: linear-gradient(black, steelblue);
+}
+.navbar{
+    color:white;
+    background-color: black;
+}
+.nav-item{
+    margin: 10px 55px 10px 40px;
+    color: white;
+}
+.nav-link{
+    font-size: 18;
+    font: weight 4px;
+}
+.dropdown-menu{
+    color: white;
+}
+.dropdown-item{
+    color:white;
+    background-color:black;
+}
+.d-flex{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-left: 5px;
+    height: 30px;
+    width: 350;
+}
+.btn1{
+    color: black;
+    border-color:black;
+    border-radius: 5px;
+    width: 89px;
+}
+.btn1:hover{
+    background-color: red;
+    color: white;
+}
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous">
+    </script>
+  <script>
+    $(function () {
+      $("#header").load("navbar.html");
+    });
+  </script>
+</head>
+
+<body>
+  <section>
+  <nav class="navbar navbar-expand-md navbar-dark" style="font-size: small;">
+    <div class="container-fluid">
+      <img class="logo-image" src='./logo.jpg' height="54" width="54">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./homepage2.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./seats2.html">Show Times</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown">
+              Category
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Adventure</a></li>
+              <li><a class="dropdown-item" href="#">Animation</a></li>
+              <li><a class="dropdown-item" href="#">Comedy</a></li>
+              <li><a class="dropdown-item" href="#">Drama</a></li>
+              <li><a class="dropdown-item" href="#">Sci-Fi</a></li>
+              <li><a class="dropdown-item" href="#">Thriller</a></li>
+            </ul>
+            </li>
+          
+          <form class="d-flex" >
+            <input class="form-control" type="search" placeholder="Movie name"  aria-label="Search">
+            <button class="btn1" type="submit">Search</button>
+          </form>
+          <li class="nav-item">
+            <a class="nav-link" href="./myprofilepage.html">My Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./loginpage.html">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </nav>
+
+  
+  <h1 class="text-center"
+    style="color: white; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+    CHECKOUT</h1>
+  <div class="container">
+
+    <div class="row text-center">
+      <div class="col-md-5">
+
+
+        <div align="center" style="width: 100%" ;>
+
+        </div>
+<br>
+        <h1 class="text-center"
+          style="color: white; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+          Order Summary</h1><br>
+        <div class="">
+          <h5 class="col-md-12" style="color: white;"><img src="moonfall.jpg" style="width: 190px; height: 250px;" />&nbsp &nbsp MoonFall</h5>
+          <div id="main" style="width: 100px; height: 50px;">
+          </div>
+        </div>
+
+        &nbsp<h3
+          style="color: white; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+          Seat(s) : A4,A2</h3>
+        <br>
+
+        <table class="table table-hover" style="color: white;">
+          <thead>
+            <tr>
+              <th>Age Group</th>
+              <th>Price $</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Adults : <span id="Adult"></span> </td>
+              <td>40$</td>
+
+            </tr>
+            <tr>
+              <td>Children : <span id="Child"></span></td>
+              <td>20$</td>
+
+            </tr>
+            <tr>
+              <td>Seniors : <span id="Senior"></span></td>
+              <td>20$</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+        <table class="table table-hover" style="color: white;">
+          <thead>
+            <tr>
+              <th>sales tax</th>
+              <td>7$</td>
+
+            </tr>
+            <tr>
+              <th>online fees</th>
+              <td>5$</td>
+
+            </tr>
+            <tr>
+              <th>Order Total</th>
+              <td>92$</td>
+
+            </tr>
+          </thead>
+
+        </table>
+        <br>
+        <a href="confirmation.html"><input type="submit" value="Pay and Checkout" class="btn" style="background-color: black; color: white; font-size: medium; margin-bottom: 40px;"
+          role="button"><span aria-hidden="true"></span> </a>
+        <a href="seats2.html"><input type="submit" value="Cancel" class="btn"  style="background-color: black; color: white; font-size: medium; margin-bottom: 40px;" role="button"><span
+            aria-hidden="true"></span> </a>
+      </div>
+
+
+      <form class="col-md-6">
+        <div>
+          <br>
+          <h2
+            style="color: white; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+            Add Promo Code</h2>
+
+          <div class="input-group input-group-lg">
+            <input type="text" name="name" class="form-control" placeholder="Promo code">
+          </div>
+
+        </div>
+        <div style="padding-top: 10px">
+
+          <h2
+            style="color: white; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+            Contact Details</h2>
+
+          <div class="input-group input-group-lg">
+            <input type="text" name="movie" class="form-control" value="MoonFall" readonly>
+          </div>
+          <div class="input-group input-group-lg">
+            <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+          </div>
+          <div class="input-group input-group-lg">
+            <input type="tel" name="contactno" onkeypress='return event.charCode >= 48 && event.charCode<=57'
+              class="form-control" placeholder="Contact No" title="Enter 10 digit mobile number" required>
+          </div>
+        </div>
+        <div style="padding: 50px;">
+          <h2
+            style="color: white; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+            Enter Card Details</h2>
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode<=57' name="cardno"
+              class="form-control" placeholder="Card Number" required>
+            <input type="text" name="cardno" class="form-control" placeholder="Credit/Debit" required>
+            <input type="text" onkeypress='return event.charCode >= 48 && event.charCode<=57' name="cvv"
+              class="form-control" placeholder="cvv" required>
+            <input type="text" class="form-control" name="datepicker" id="datepicker" placeholder="Expiry" required>
+            <input type="text" name="BillingAddress" class="form-control" placeholder="Billing Address" required>
+            <input type="text" name="City" class="form-control" placeholder="City" required>
+            <input type="text" name="State" class="form-control" placeholder="State" required>
+            <input type="text" name="ZipCode" class="form-control" placeholder="Zip Code" required>
+         
+          <br>
+          <input type="submit" value="Add Card" class="btn" style="background-color: black; color: white; font-size: medium;" role="button"><span aria-hidden="true"></span>
+          <br><br>
+          
+          <br>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+</section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+
+
+
+  <script>
+    $("#datepicker").datepicker({
+      format: "mm-yyyy",
+      startView: "months",
+      minViewMode: "months"
+    });
+
+    window.addEventListener('load', () => {
+
+      var data = JSON.parse(sessionStorage.getItem('details'));
+      console.log('data', data);
+
+      document.getElementById('Adult').innerHTML = data.Adult;
+      document.getElementById('Senior').innerHTML = data.Senior;
+      document.getElementById('Child').innerHTML = data.Child;
+
+    });
+
+
+  </script>
+
+  <script type="text/javascript">
+
+    function getTxt() {
+
+      var Adult = document.getElementById('Adult').value;
+      var Senior = document.getElementById('Senior').value;
+      var Child = document.getElementById('Child').value;
+      var details = JSON.stringify({ Adult: Adult, Senior: Senior, Child: Child });
+      sessionStorage.setItem('details', details);//JSON.parse
+      window.location = 'checkout-page.html';
+      return;
+    }
+
+
+    $(".date").datepicker({
+      format: "dd-mm-yyyy",
+    });
+
+    var button1 = document.querySelectorAll('.btn');
+    for (var a = 0; a < button1.length; a++) {
+
+      button1[a].addEventListener('click', function () {
+        $(this).css({ "background-color": "green" });
+      });
+    }
+
+  </script>
+
+  
+
+</body>
+
+</html>
