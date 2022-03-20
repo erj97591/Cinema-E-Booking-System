@@ -1,0 +1,157 @@
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>login page</title>
+            <!-- Link style.css here-->
+            <link href="./navbarstyle.css" rel="stylesheet">
+    
+            <!-- link fontawesome -->
+            <link  href="./fontawesome-free-5.15.4-web/" rel="stylesheet">
+        
+            <!-- link bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    <body>
+<style>
+
+section{
+    height: 100%;
+    background-color: gray;
+    align-items: center;
+}
+
+.login-container{
+    background-color: white;
+    margin-left: 420px;
+    margin-right: 200px;
+    border-radius: 10px;
+    width: 600;
+}
+label{
+    color: black;
+}
+.form-row{
+    padding-left: 170px;
+    margin-top: 10px;
+    margin:20px;
+}
+.link{
+    padding-bottom: 20px;
+}
+h3{
+    padding-top: 70;
+    padding-left: 210px;
+    padding-bottom: 20px;
+    font-size: 30;
+    font-weight: 40;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+}
+.inp{
+    height: 30px;
+    width: 250px;
+    border-radius: 5px;
+    color: black;
+}
+.para2{
+    padding-left: 200px;
+    padding-bottom: 70px;
+    color: black;
+}
+
+</style>
+
+
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <img class="logo-image" src='./logo.jpg' height="57" width="57">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="./homepage1.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Show Times</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Promotions</a>
+              </li>
+              
+        
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Category
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                          <li><a class="dropdown-item">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Adventure</a></li>
+                    <li><a class="dropdown-item" href="#">Animation</a></li>
+                    <li><a class="dropdown-item" href="#">Comedy</a></li>
+                    <li><a class="dropdown-item" href="#">Drama</a></li>
+                    <li><a class="dropdown-item" href="#">Sci-Fi</a></li>
+                    <li><a class="dropdown-item" href="#">Thriller</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+            
+    
+    
+    
+    
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Movie name" aria-label="Search">
+              <button class="btn1" type="submit">Search</button>
+            </form>
+           
+              <li class="nav-item">
+                <a class="nav-link active" href="./loginpage.html">Login</a>
+              </li>
+            </ul>
+          </div>    
+          </div>
+        </div>
+      </nav>
+    
+        <section>
+          <div class="login-container">
+          <div class="login-row">
+                   <form>
+                    <h3>Admin Portal</h3>
+                    <div class="form-row">
+                         <div class="id col-lg-1">
+                          <label for="username">Username*</label>
+                          <input type="text" class="inp" placeholder="username" required>                    
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="id col-lg-1">
+                              <label for="password">Password*</label>
+                          <input type="password" class="inp" placeholder="  password" required>                    
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="id col-lg-1 py-3 pt-4">
+                                <button class="btn1" onclick="location.href='./admin.html'"> Sign In</button>
+                            </div>
+                        </div>
+                        <div class="para2">
+                            <a class="link" href="./resetpasswordpage.html">Forgot Password?</a>
+                            </div>
+                    </form>
+                  </div>
+                </div>
+          </section>
+        </body>
+    </html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Page</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body style="background-color:#efefef;">
+    <div class="container">
+        <ul id="myTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"
+                aria-controls="home" aria-expanded="false">Home</a></li>
+            <li role="presentation" class=""><a href="#admin-management" role="tab" data-toggle="tab"
+                    aria-controls="admin-management" aria-expanded="false">Admin Management</a></li>
+            <li role="presentation" class=""><a href="#user-management" role="tab" data-toggle="tab"
+                    aria-controls="user-management" aria-expanded="false">User Management</a></li>
+            <li role="presentation" class=""><a href="#movie-management" role="tab" data-toggle="tab"
+                    aria-controls="movie-management" aria-expanded="false">Movie Management</a></li>
+            <li role="presentation" class=""><a href="#promotion-and-ticket-management" role="tab" data-toggle="tab"
+                    aria-controls="promotion-and-ticket-management" aria-expanded="false">Promotion and Ticket Management</a></li>
+            <br><li role="presentation" class="" style="float:right;background-color:black"><input type="submit" onclick="location.href='./adminloginpage.html'" value="Log Out" class="btn btn-primary"></a></li>
+            
+        </ul>
+
+        <div id="myTabs" class="tab-content">
+            <div class="tab-pane active" id="home">
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Summary</h2>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="col">Sr. No</th>
+                  <th class="col">SUMMARY</th>
+                  <th class="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="row">1.</th>
+                  <td class="text">Now Showing Movies</td>
+                  <td class="text">4</td>
+                </tr>
+                <tr>
+                  <th class="row">2.</th>
+                  <td class="text">Coming Soon Movies</td>
+                  <td class="text">2</td>
+               
+              
+                </tr>
+                <tr>
+                  <th class="row">3.</th>
+                  <td class="text">Registered Users</td>
+                  <td class="text">3</td>
+      
+                </tr>
+              
+              </tbody>
+            </table>
+          </div>
+      
+
+
+
+       
+            <div class="tab-pane active" id="admin-management">
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Administrators</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>Morse</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mark</td>
+                            <td>juke</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Max</td>
+                            <td>Ponting</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Add New Administrator</h2>
+
+                <form class="col-md-6">
+                    <div class="row form-group">
+                        <label for="fname">First Name</label><br>
+                        <input type="text" name="firstname" class="form-control" required>
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Last Name</label><br>
+                        <input type="text" name="firstname" class="form-control" required>
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Username</label><br>
+                        <input type="text" name="firstname" class="form-control" required>
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Password</label><br>
+                        <input type="text" name="firstname" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary">
+                    </div>
+
+                </form>
+            </div>
+            <div class="tab-pane" id="user-management">
+
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Registered Users</h2>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Subscription</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>Morse</td>
+                            <td>Gold</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mark</td>
+                            <td>juke</td>
+                            <td>Silver</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Max</td>
+                            <td>Ponting</td>
+                            <td>Platinum</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="movie-management">
+
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Movies</h2>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Image</th>
+                            <th>Trailer</th>
+                            <th>Screen</th>
+                            <th>Date Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sing 2</td>
+                            <td>Morse</td>
+                            <td>link1</td>
+                            <td>3</td>
+                            <td>Date Time</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Blacklight</td>
+                            <td>Morse</td>
+                            <td>link2</td>
+                            <td>1</td>
+                            <td>Date Time</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Moon Fall</td>
+                            <td>Morse</td>
+                            <td>link3</td>
+                            <td>2</td>
+                            <td>Date Time</td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Add Movie</h2>
+
+                <div class="col-md-5">
+
+                    <h3
+                        style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                        Movie Details</h3>
+                    <form>
+                        <div class="row form-group">
+                            <label for="fname">Title</label><br>
+                            <input type="text" name="Title" class="form-control" required>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Category</label><br>
+                            <input type="text" name="Category" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Film Rating</label><br>
+                            <input type="text" name="FilmRating" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Duration</label><br>
+                            <input type="text" name="Duration" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Director</label><br>
+                            <input type="text" name="Director" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Producer</label><br>
+                            <input type="text" name="Producer" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Cast1</label><br>
+                            <input type="text" name="Cast1" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Cast2</label><br>
+                            <input type="text" name="Cast2" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Cast3</label><br>
+                            <input type="text" name="Cast3" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Synopsis</label><br>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Trailer Link</label><br>
+                            <input type="text" name="Trailink" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Image Link</label><br>
+                            <input type="text" name="Imgink" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-5">
+
+                    <h3
+                        style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                        Add Show Details</h3>
+                    <form>
+                        <div class="row form-group">
+                            <label for="fname">Select Movie</label><br>
+                            <select class="form-control" required>
+                                <option>THE BATMAN</option>
+                                <option>MINIONS</option>
+                            </select>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Screen</label><br>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">Screen 1</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">Screen 2</label>
+                            </div>
+                            <div class="radio disabled">
+                                <label><input type="radio" name="optradio">Screen 3</label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Date</label><br>
+                            <input type="date" name="ShowDate" class="form-control" required>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Time</label><br>
+                            <input type="time" name="ShowTime" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add Show" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane" id="promotion-and-ticket-management">
+
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Current Promotions</h2>
+            
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Promo Amount</th>
+                            <th>Promo Code</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>State</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>10$</td>
+                            <td>CHRISTMAS</td>
+                            <td>02/21/22</td>
+                            <td>06/21/22</td>
+                            <td>Sent</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="submit" value="Edit" class="btn btn-primary">
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Add New Promotion</h2>
+            
+                <div class="col-md-5">
+            
+                    <form>
+                        <div class="row form-group">
+                            <label for="fname">Name</label><br>
+                            <input type="text" name="Title" class="form-control" required>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Promotional Amount</label><br>
+                            <input type="text" name="Category" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Promotional Code</label><br>
+                            <input type="text" name="FilmRating" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">Start Date</label><br>
+                            <input type="date" name="ShowDate" class="form-control" required>
+                        </div>
+                        <div class="row form-group">
+                            <label for="fname">End Date</label><br>
+                            <input type="date" name="ShowDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                        <br>
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Current Ticket Prices</h2>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Adult</th>
+                            <th>Child</th>
+                            <th>Senior</th>
+                            <th>Sales Tax</th>
+                            <th>Online Fees</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9$</td>
+                            <td>7$</td>
+                            <td>7$</td>
+                            <td>5$</td>
+                            <td>3$</td>
+                            <td>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-seconday" style="background-color: rgb(56, 121, 194); color:#efefef">Edit</button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                
+                
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Ticket Prices</h2>
+                    <div class="row form-group">
+                        <label for="fname">Adult</label><br>
+                        <input type="text" name="Adult" class="form-control">
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Child</label><br>
+                        <input type="text" name="Child" class="form-control">
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Senior</label><br>
+                        <input type="text" name="Senior" class="form-control">
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Sales Tax</label><br>
+                        <input type="text" name="SalesTax" class="form-control">
+                    </div>
+                    <div class="row form-group">
+                        <label for="fname">Online Fees</label><br>
+                        <input type="text" name="OnlineFees" class="form-control">
+                    </div>
+                    
+                    <button type="button" class="btn btn-seconday" style="background-color: rgb(56, 121, 194); color:#efefef">Submit</button>
+                        
+                    
+                
+                    </form>
+                
+                </div>   
+
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-5">
+
+                <h2
+                    style="color:#0C304E;; font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';">
+                    Send Promotion</h2>
+                <div class="col-md-5">
+            
+                    <form>
+                        <div class="row form-group">
+                            <label for="fname">Choose a Promotion:</label><br>
+                            <select class="form-control" required>
+                                <option>New Year Special</option>
+                                <option>Christmas Special</option>
+                                <option>Black Friday</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Send" class="btn btn-primary">
+                        </div>
+                
+                    </form>
+                    
+                </div>
+              
+                </div>    
+            
+            
+            
+            
+            
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <br>
+    <br>
+
+</body>
+
+</html>
