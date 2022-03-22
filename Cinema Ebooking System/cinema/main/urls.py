@@ -1,10 +1,11 @@
-from django.urls import path
-from . import views
 from django.contrib import admin
-from main import views as main_views
+from django.urls import path
+from .views import registration_page, home_page, activation_sent_view, activate
+
 urlpatterns = [
-path("home/<int:id>", views.home, name = "home"),
-path("login/", views.login_page, name = "login_page"),
-path("register/", views.registration_page, name = "registration_page"),
-path("admin/", admin.site.urls),
-]
+    path('admin/', admin.site.urls),
+    path('', home_page, name="home"),
+    path('register/', registration_page, name="register"),
+    path('sent/', activation_sent_view, name="activation_sent"),
+    path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),
+    ]

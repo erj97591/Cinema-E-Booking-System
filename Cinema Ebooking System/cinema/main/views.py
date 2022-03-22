@@ -1,31 +1,67 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm, User
-from . import views 
-from .forms import RegistrationForm
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_str
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.utils.http import urlsafe_base64_decode , urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from .tokens import account_activation_token
+from django.template.loader import render_to_string
 
-# Create your views here.
-def home(response, id):
-	if id == 2:
-		return render(response, "main/homepage2.html", {})
-	else: return render(response, "main/homepage1.html",{})
-def login_page(response):
-	if response.method=="POST":
-		email = response.POST['username']
-		password = response.POST['password']
-		
-	return render(response, "main/loginpage.html")
-def seat_view(response, id):
-	if id ==2:
-		return render(response, "main/seat.html", {})
-	else: return render(response, "main/seats2.html",{})
-def registration_page(response):
-	form = RegistrationForm(response.POST)
-	if form.is_valid():
-		form.save()
-		email = form.cleaned_data.get('email')
-		password = form.cleaned_data.get('password1')
-		user = authenticate(username=username, password=password)
-		return redirect('main/homepage1.html')
-	return render(response, "main/registration.html", {'form': form})
+from .forms import RegistrationForm
+from .tokens import account_activation_token
+
+def home_page(request):
+    return render(request, 'main/home.html')
+
+def activation_sent_view(request):
+    return render(request, 'main/activation_sent.html')
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    # checking if the user exists, if the token is valid.
+    if user is not None and account_activation_token.check_token(user, token):
+        # if valid set active true 
+        user.is_active = True
+        # set signup_confirmation true
+        user.profile.signup_confirmation = True
+        user.save()
+        login(request, user)
+        return redirect('home')
+    else:
+        return render(request, 'main/activation_invalid.html')
+
+def registration_page(request):
+    if request.method  == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
+            # user can't login until link confirmed
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            subject = 'Please Activate Your Account'
+            # load a template like get_template() 
+            # and calls its render() method immediately.
+            message = render_to_string('main/activation_request.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                # method will generate a hash value with user related data
+                'token': account_activation_token.make_token(user),
+            })
+            user.email_user(subject, message)
+            return redirect('activation_sent')
+    else:
+        form = RegistrationForm()
+    return render(request, 'main/signup.html', {'form': form})
