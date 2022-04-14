@@ -1,0 +1,2 @@
+We Should Probably Put All of the dependencies here so that way when we create new ones the front end people won't have any issues.
+pip install django-encrypted-model-fields
