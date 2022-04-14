@@ -1,2 +1,0 @@
-within cinema type
-python manage.py runserver
