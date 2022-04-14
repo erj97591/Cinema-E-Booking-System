@@ -1,0 +1,6 @@
+{% autoescape off %}
+    Hi {{ user.username }},
+    Thank you for joining us at Cinema E-Booking!
+    Please click the following link to confirm your registration:
+    http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+    {% endautoescape %}

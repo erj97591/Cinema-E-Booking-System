@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registration Confirmation</title>
+
+ <!-- Link style.css here-->   
+{% load static %}
+<link href="{% static 'main./registrationstyle.css' %}" rel="stylesheet">
+     
+<!-- Bootstrap--> 
+    <link rel="stylesheet" href="{% static 'main./bootstrap.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    
+</head>
+
+<body>
+    <section>
+<h2 class="text-center">Registration Confirmed !</h2>
+    <form>
+        <div class="text-center">
+          <h3 class="col-md-12" id="mDescrip">Your account has been created </h3>
+          <h3 class="col-md-12" id="mDescrip">An activation link has been sent to the registered email address</h3>
+          <h3 class="text-center">THANK YOU!</h3>
+        </div>
+    </form>
+    <a href="./homepage1.html"><input class="register_button" action="homepage1.html"/></a>
+    </section>
+</body>
+</html>
+
+ 

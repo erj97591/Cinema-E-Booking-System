@@ -1,0 +1,22 @@
+section{
+    background-image: linear-gradient(black, darkred);
+    height: 100%;
+}
+.summtab-container{
+    margin-top: 130px;
+    margin-left: 280px;
+    margin-right: 280px;
+}
+.td{
+    color: white;
+}
+.col{
+    color: white;
+    font-size: x-large;
+}
+.row{
+    color: grey;
+}
+.text{
+    color: white;
+}

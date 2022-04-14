@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+}
+section{
+    background-image: linear-gradient(black, steelblue);
+    height: 180%;
+}
+.trailer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.view-movie-button3{
+    margin-top: 20px;
+    margin-left: 700px;
+    padding: 20px;
+    width: 40px;
+    height: 60px;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+    text-align: center; 
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.view-movie-button3:hover{
+    background-color:red;   
+    color: white;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+iframe{
+    padding:20px;
+    margin-top: 60px;
+}
+p{
+    margin-top: 10px;
+    padding-top: 50px;
+    padding-left: 415px;
+    color: white;
+    font-weight: 500;
+    font-size: x-large;
+}
+h4{
+    margin-top: 30px;
+    padding-top: 40px;
+    padding-left: 730px;
+    color: white;
+}
+.rating{
+    position: relative;
+    width: 1em;
+    font-size: x-small;
+    color: #FFD600;
+    cursor: pointer
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    padding-left: 765px;
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    width: 1em;
+    font-size: 2vw;
+    color: #FFD600;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+

@@ -1,0 +1,23 @@
+section{
+    background-image: linear-gradient(black, steelblue);
+    height: 100%;
+}
+
+.reset-head{
+    color: white;
+    margin-top: 0;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    padding-top: 30px;
+}
+.card-body{
+    background-color: white;
+    border-radius: 10px;
+    width: 800;
+    height: 170;
+    margin-top: 0 30px;
+}
+.reset-form-group{
+    color: black;
+}

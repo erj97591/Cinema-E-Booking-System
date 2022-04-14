@@ -1,0 +1,43 @@
+
+*{
+    margin: 0;
+}
+section{
+    background-image: linear-gradient(black, steelblue);
+}
+.navbar{
+    color:white;
+    background-color: black;
+}
+.nav-item{
+    margin: 10px 40px 10px 20px;
+    color: white;
+}
+.nav-link{
+    font-size: 18;
+    font: weight 4px;
+}
+.dropdown-menu{
+    color: white;
+}
+.dropdown-item{
+    color:white;
+    background-color:black;
+}
+.d-flex{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 40px;
+    width: 400;
+}
+.btn1{
+    color: black;
+    border-color:black;
+    border-radius: 5px;
+    width: 89px;
+}
+.btn1:hover{
+    background-color: red;
+    color: white;
+}

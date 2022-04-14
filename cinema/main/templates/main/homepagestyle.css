@@ -1,0 +1,79 @@
+section{
+    background-image: linear-gradient(black, steelblue);
+    height: 290%;
+}
+.part1{
+    padding-left:98px;
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+h3{
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.comingsoon-container{
+    background-image: linear-gradient(to top, black, steelblue);
+}
+.part2{
+    padding-top: 120px;
+    padding-bottom: 30px;
+    padding-left: 98px;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.col{
+    display: flex;
+    margin-left: 100px;
+    margin-right: 0;
+    align-content: center;
+    }
+.card{
+    height: 400px;
+    width: 270px;
+    padding: 5px;
+}
+.card-img-top{
+    width: 170px;
+    height:310px;
+}
+.view-movie-button1{
+    margin-top: 50px;
+    padding: 15px;
+    width: 140px;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+    text-align: center; 
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.view-movie-button2{
+    margin-top: 50px;
+    padding: 15px;
+    width: 140px;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+    text-align: center; 
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.view-movie-button1:hover{
+    background-color:red;   
+    color: white;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.view-movie-button2:hover{
+    background-color:greenyellow;   
+    color: black;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.btn2{
+    display:flex;
+    padding:5px;
+}
+.container{
+    height: 100%;
+    align-content: center;
+    margin-left: 50px;
+}
