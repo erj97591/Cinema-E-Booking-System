@@ -2,7 +2,7 @@ from datetime import date
 
 from django.contrib import admin
 
-from .models import PaymentCard, Profile, Movie, Promotion, ShowTime, ShowRoom
+from .models import PaymentCard, Profile, Movie, Promotion, ShowTime, ShowRoom, Ticket
 
 class PromotionPermissions(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
@@ -33,21 +33,19 @@ class PromotionPermissions(admin.ModelAdmin):
         if not self.has_change_permission(request, obj):
             subscribers = Profile.objects.filter(promotions=True)
             if subscribers is not None:
+                subject = "Check Out This New Promotion"
                 for account in subscribers:
-                    print(f'account: {account}')
-            # print(f'email: {account.user.email}') #Test Lines
+                    message = f'Hello {account}! A New Promotion For the A4 Theatre is offering a {obj.discount}% of coupon from {obj.start_date} through {obj.end_date}! You will not want to miss out! Use code {obj.promo_id} at the checkout to receive your discount!'
+                    account.user.email_user(subject, message)
 
 class ShowTimeInline(admin.TabularInline):
     model = ShowTime
     ordering = ('date','time',)
+    fields = ('date', 'time', 'movie',)
 class ShowRoomPermission(admin.ModelAdmin):
     inlines = [ShowTimeInline,]
     list_display = ('room_number','number_seats','showtimes')
     def showtimes(self, obj=None):
-        def __str__(self):
-            if True:
-                return 'a simple string here'
-            #return list(ShowTime.objects.order_by('date','time').filter(show_room=obj))
         if obj is None:
             return
         else:
@@ -55,7 +53,6 @@ class ShowRoomPermission(admin.ModelAdmin):
             ordered_output = ''
             for x in ordered_display:
                 ordered_output += str(x)
-            print(ordered_output)
             return ordered_output
 # Register your models here.
 admin.site.register(Profile)
@@ -63,4 +60,8 @@ admin.site.register(PaymentCard)
 admin.site.register(Movie)
 admin.site.register(ShowRoom, ShowRoomPermission)
 admin.site.register(Promotion, PromotionPermissions)
+admin.site.register(Ticket)
+admin.site.site_header = "A4 Cinema"
+admin.site.site_title = "A4 Cinema Admin"
+admin.site.index_title = "Administration"
 #

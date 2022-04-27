@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'embed_video',
     'bootstrap5',
     'six',
     'encrypted_model_fields',
@@ -75,11 +75,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #'django.core.context_processors.request',
             ],
         },
     },
 ]
-
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
 WSGI_APPLICATION = 'cinema.wsgi.application'
 
 

@@ -53,10 +53,10 @@
                   </ul>
                   </li>
                   
-            <form class="d-flex" method="POST" action="/homepage2/">
-              <input class="form-control" type="search" placeholder="Movie name" aria-label="Search">
-              <button class="btn1" type="submit">Search</button>
-            </form>
+                  <form class="d-flex" method="get" action="{% url 'search_bar' %}">
+                    <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
+                    <button class="btn1" type="submit">Search</button>
+                  </form>  
             <li class="nav-item">
               <a class="nav-link" href="{% url 'profile_page' %}">My Profile</a>
             </li>    
@@ -99,9 +99,10 @@
       </div>
     
 
-      <section>   
+      <section>
+        {% if smovies.all %} 
         <h3 class="part1" id="now-showing">NOW PLAYING</h3>     
-        {% for movie in movies %}  
+        {% for movie in smovies %}  
         {% if movie.isShowing %}
         <div class="row py-5">
             <div class="col lg-4">
@@ -110,6 +111,7 @@
                 <div class="card-body">
                   <a href="{% url 'movie_info' movie.slug %}" style="text-decoration: none;">
                     <h5 class="card-title">{{ movie.title }}</h5>
+                    <h5 class="card-title">{{ movie.rating }}</h5>
                 </a>
                   </div>
                 <div class="btn2">
@@ -122,8 +124,10 @@
         </div>
         {% endif %}
         {% endfor %}
+        {% endif %}
+        {% if cmovies.all %} 
         <h3  class="part2"  id="coming-soon">COMING SOON</a></h3>
-        {% for movie in movies %}  
+        {% for movie in cmovies %}  
         {% if not movie.isShowing %}
         <div class="row py-5">          
           <div class="col lg-4">
@@ -132,6 +136,7 @@
               <div class="card-body">
                 <a href="{% url 'movie_info' movie.slug %}" style="text-decoration: none;">
                   <h5 class="card-title">{{ movie.title }}</h5>
+                  <h5 class="card-title">{{ movie.rating }}</h5>
               </a>
               </div>
               <div class="btn2">
@@ -142,6 +147,7 @@
         </div>
         {% endif %}
         {% endfor %}
+        {% endif %}
       </div>
      </div>
     </div>

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import PaymentCard, Profile
+from .models import PaymentCard, Profile, Booking
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -39,3 +39,8 @@ class PaymentForm(ModelForm):
         model = PaymentCard
         fields = ['card_number', 'expiration_date', ]
 
+class BookingForm(ModelForm):
+
+    class Meta:
+        model = Booking
+        fields = ['number_tickets']

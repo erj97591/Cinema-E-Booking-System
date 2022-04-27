@@ -6,6 +6,12 @@ from django.urls import path
 from .views import registration_page, home_page, activation_sent_view, activate, login_page, home_page_loggedin, \
     profile_page, logout_page, add_payment, edit_profile_page, search_bar, movie_info, coming_soon, action_movie, adventure_movie, animation_movie, comedy_movie, drama_movie, scifi_movie, thriller_movie, book_movie
 
+# admin header customization
+admin.site.site_header = "A4 Cinema"
+admin.site.site_title = "A4 Cinema Admin"
+admin.site.index_title = "Administration"
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page, name="home"),

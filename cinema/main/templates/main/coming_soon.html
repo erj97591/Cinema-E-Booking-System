@@ -22,7 +22,7 @@
      
     </head>
 <body>
-
+  <section style=" background-image: linear-gradient(black, steelblue);">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
           <img class="logo-image" src="{% static 'main./logo.jpg' %}" height="54" width="54">
@@ -61,34 +61,47 @@
 
 
 
-            <form class="d-flex" method="get" action="{% url 'search_bar' %}">
-              <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
-              <button class="btn1" type="submit">Search</button>
-            </form>    
+                  <form class="d-flex" method="get" action="{% url 'search_bar' %}">
+                    <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
+                    <button class="btn1" type="submit">Search</button>
+                  </form>    
 
-
-
-
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login_page' %}">Login</a>
-              </li>
+                  {% if not user.is_authenticated %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login_page' %}">Login</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'profile_page' %}">My Profile</a>
+                    </li>    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
+                      </li>
+                  {% endif %}
             </ul>
           </div>    
           </div>
         </div>
       </nav>
 
-<section>   
-    <h3  class="part2"  id="coming-soon">COMING SOON</a></h3>
-    {% for movie in movies %}  
-    {% if not movie.isShowing %}
+
+{% load embed_video_tags %}
+{% block page_content %}
+<div class="part1">
+  <div class="part1">
+
+  {% if movies.all %} 
+    <h3 class="part1">COMING SOON</h3>
+    {% for movie in movies %} 
     <div class="row py-5">          
       <div class="col lg-4">
         <div class="card">
-          <a href="{% url 'movie_info' movie.slug %}"><img src="{{ movie.picture.url }}" class="card-img-top" alt="..."></a>
+          <a href=""><img src="{{ movie.picture.url }}" class="card-img-top" alt="..."></a>
           <div class="card-body">
-            <a herf="{% url 'movie_info' movie.slug %}" style="text-decoration: none;">
-            <h5 class="card-title">{{ movie.title }}</h5>
+            <a href="{% url 'movie_info' movie.slug %}" style="text-decoration: none;">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <h5 class="card-title">{{ movie.rating }}</h5>
           </a>
           </div>
           <div class="btn2">
@@ -96,10 +109,13 @@
           </div>                
         </div>
       </div>
+      <div class="col lg-4">{% video movie.trailer 'tiny' %}</div> 
     </div>
-    {% endif %}
     {% endfor %}
-  </div>
- </div>
-</div>
-</section> 
+    {% endif %}
+ </div>    
+</div> 
+  </section>
+</body>
+</html>
+{%endblock%}

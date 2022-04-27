@@ -10,7 +10,7 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.db.models import Q
-from .forms import RegistrationForm, PaymentForm
+from .forms import RegistrationForm, PaymentForm, BookingForm
 from .forms import UserUpdateForm, ProfileUpdateForm
 from .models import PaymentCard, Movie, ShowTime
 from .tokens import account_activation_token
@@ -20,16 +20,22 @@ from django.views.generic import ListView
 #    return render(request, 'main/homepage1.html')
 def home_page(request):
     obj = Movie.objects.all()
+    smovies = obj.exclude(showtimes__isnull=True)
+    cmovies = obj.filter(showtimes__isnull=True)
+    #playing = obj.filter()
+    #coming =
     #filter(status="published")
     #template_name = 'homepage1.html'
-    context = {'movies': obj}
+    context = {'smovies': smovies, 'cmovies' : cmovies}
     return render(request, 'main/homepage1.html', context)
 
 def home_page_loggedin(request):
     if not request.user.is_authenticated:
         return redirect('login_page')
     obj = Movie.objects.all()
-    context = {'movies': obj}
+    smovies = obj.exclude(showtimes__isnull=True)
+    cmovies = obj.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
     return render(request, 'main/homepage2.html', context)
 
 def search_bar(request):
@@ -41,7 +47,9 @@ def search_bar(request):
         if search is not None:
             lookups= Q(title__icontains=search) | Q(category__icontains=search)
             post = Movie.objects.all().filter(lookups)
-            context={'post':post, 'submitbutton': submitbutton}
+            smovies = post.exclude(showtimes__isnull=True)
+            cmovies = post.filter(showtimes__isnull=True)
+            context={'smovies': smovies, 'cmovies' : cmovies, 'submitbutton': submitbutton}
         #print(post)
             return render(request, 'main/search.html', context)
         else:
@@ -56,6 +64,88 @@ def movie_info(request, slug):
     context = {'movie': movie, 'shows': shows}
     return render(request, 'main/movie_info.html', context)
 
+def coming_soon(request):
+    context = {}
+    obj = Movie.objects.all()
+    movies = obj.filter(showtimes__isnull=True)
+    context = {'movies' : movies}
+    return render(request, 'main/coming_soon.html', context)
+
+def action_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="action")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/action.html', context)
+
+def adventure_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="adventure")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/adventure.html', context)
+
+def animation_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="animation")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/animation.html', context)
+
+def comedy_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="comedy")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/comedy.html', context)
+
+def drama_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="drama")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/drama.html', context)
+
+def scifi_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="sci-fi")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/scifi.html', context)
+
+def thriller_movie(request):
+    context = {}
+    movies = Movie.objects.filter(category="thriller")
+    smovies = movies.exclude(showtimes__isnull=True)
+    cmovies = movies.filter(showtimes__isnull=True)
+    context = {'smovies': smovies, 'cmovies' : cmovies}
+    return render(request, 'main/thriller.html', context)
+
+'''
+def booking_movie(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            Booking = form.save(commit=False)
+            Booking.number_tickets = form.cleaned_data.get('number_tickets')
+            #PaymentCard.expiration_date = form.cleaned_data.get(
+            #    'expiration_date')
+            Booking.user = User.objects.get(pk=request.user.id)
+            Booking.save()
+
+            return redirect('profile_page')
+    else:
+        form = BookingForm()
+    return render(request, 'main/book_movie.html', {'form': form})
+'''
 def book_movie(request, slug):
     context = {}
     movie = get_object_or_404(Movie, slug=slug)
@@ -63,81 +153,6 @@ def book_movie(request, slug):
     context = {'movie': movie, 'shows': shows}
     return render(request, 'main/book_movie.html', context)
 
-def coming_soon(request):
-    context = {}
-    movies = Movie.objects.filter(showing=False)
-    context = {'movies' : movies}
-    return render(request, 'main/coming_soon.html', context)
-
-def action_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="action")
-    context = {'movies' : movies}
-    return render(request, 'main/action.html', context)
-
-def adventure_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="adventure")
-    context = {'movies' : movies}
-    return render(request, 'main/adventure.html', context)
-
-def animation_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="animation")
-    context = {'movies' : movies}
-    return render(request, 'main/animation.html', context)
-
-def comedy_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="comedy")
-    context = {'movies' : movies}
-    return render(request, 'main/comedy.html', context)
-
-def drama_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="drama")
-    context = {'movies' : movies}
-    return render(request, 'main/drama.html', context)
-
-def scifi_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="sci-fi")
-    context = {'movies' : movies}
-    return render(request, 'main/scifi.html', context)
-
-def thriller_movie(request):
-    context = {}
-    movies = Movie.objects.filter(category="thriller")
-    context = {'movies' : movies}
-    return render(request, 'main/thriller.html', context)
-
-
-
-'''
-def movie_info(request, primary_key):
-    try:
-        movie = Movie.objects.get(pk=primary_key)
-    except Movie.DoesNotExist:
-        raise Http404('Movie does not exist')
-
-    return render(request, 'main/movie_info.html', context={'movie': movie})
-
-class SearchResultsView(ListView):
-    model = Movie
-    template_name = "main/search.html"
-
-    def get_queryset(self): # new
-        result = super(SearchResultsView, self).get_queryset()
-        query = self.request.GET.get("search")
-        print(query)
-        if query:
-            object_list = Movie.objects.filter(
-                Q(title__icontains=query) | Q(category__icontains=query)
-            )
-        else:
-            result = None
-        return result
-'''
 def activation_sent_view(request):
     return render(request, 'main/activation_sent.html')
 

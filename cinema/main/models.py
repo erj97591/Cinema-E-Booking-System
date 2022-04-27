@@ -8,35 +8,29 @@ from encrypted_model_fields.fields import EncryptedIntegerField, EncryptedDateFi
 from django.utils import timezone
 from datetime import datetime, timedelta, time, date
 from django.core.exceptions import ValidationError
+from  embed_video.fields  import  EmbedVideoField 
+from django.utils.translation import gettext_lazy as _ 
+
 
 
 class ShowRoom(models.Model):
+
     room_number = models.IntegerField()
     number_seats = models.IntegerField()
 
     def __str__(self):
         return str(self.room_number)
-'''
-class ShowTime(models.Model):
-    show_id = models.IntegerField()
-    date = models.DateField()
-    time = models.TimeField()
-    duration = models.DurationField()
-    #movie = models.ForeignKey(Movie, on_delete=models.CASCADE, default=None)
-    #show_room = models.ForeignKey(ShowRoom, on_delete=models.CASCADE, default=None)
-    
-    def __str__(self):
-        return str(self.show_id)
-'''
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     cast = models.CharField(max_length=500)
-    trailer = models.URLField(default="https://www.youtube.com/watch?v=iw_wt2hHW2w")
+    trailer = EmbedVideoField()
     synopsis = models.CharField(max_length=500)
     category = models.CharField(max_length=100)
     director = models.CharField(max_length=100)
     producer = models.CharField(max_length=100)
     picture = models.ImageField(blank=True, upload_to='movies')
+    rating = models.CharField(max_length=100)
     slug = models.SlugField(null=True)
     duration = models.DurationField(default=timedelta(hours=2, minutes=30))
 
@@ -84,6 +78,12 @@ class ShowTime(models.Model):
                     raise ValidationError("Movies Overlap")
                 else:
                     print('mutually exclusive')
+                    self.create_tickets()
+
+    def create_tickets(self):
+        for seat in range(self.show_room.number_seats):
+            Ticket(ticket_id=seat, showtime=self).save()
+
 
 
 class Promotion(models.Model):
@@ -91,42 +91,46 @@ class Promotion(models.Model):
     discount = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
+    send = models.BooleanField(default=False)
     
     def __str__(self):
         return str(self.promo_id)
-        
+
+class Booking(models.Model):
+     #booking_id = models.IntegerField()
+     booking_id = models.AutoField(primary_key=True)
+     number_tickets = models.IntegerField()
+     booking_status = models.CharField(max_length=100)
+     #showtime = models.ForeignKey(ShowTime, on_delete=models.CASCADE)
+     #user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+     def __str__(self):
+        return str(self.booking_id)
+
+class Ticket(models.Model):
+    ticket_id = models.IntegerField()
+    showtime = models.ForeignKey(ShowTime, on_delete=models.CASCADE)
+    reserved = models.BooleanField(default=False)
+    class TicketType(models.TextChoices):
+        CHILD = 'C', _('Child')
+        ADULT = 'A', _('Adult')
+        SENIOR = 'S', _('Senior')
+
+    ticket_type = models.CharField(
+        max_length=1,
+        choices=TicketType.choices,
+        default=TicketType.ADULT,
+    )
+    def price(self):
+        if self.ticket_type.CHILD:
+            return "3"
+        if self.ticket_type.ADULT:
+            return "7"
+        if self.ticket_type.SENIOR:
+            return "5"
 
 
-'''
-class Movie(models.Model):
-    #STATUS_CHOICE = (
-     #   ('coming_soon', 'Coming_Soon'),
-      #  ('showing', 'Showing'),
-    #)
-    title = models.CharField(max_length=100)
-    cast = models.CharField(max_length=500)
-    trailer = models.URLField(default="https://www.youtube.com/watch?v=iw_wt2hHW2w")
-    synopsis = models.CharField(max_length=500)
-    category = models.CharField(max_length=100)
-    director = models.CharField(max_length=100)
-    producer = models.CharField(max_length=100)
-    picture =  models.ImageField(blank=True, upload_to='movies/')
-    rating = models.CharField(max_length=100, null=True)
-    #status = models.CharField(max_length=10,choices=STATUS_CHOICE,default='coming_soon')
-    showing = models.BooleanField(default=False)
-    showtimes = models.ManyToManyField(ShowTime, related_name="movies")
-    #, blank=True, null=True
-    slug = models.SlugField(null=True, default=title)
 
-    def isShowing(self):
-        return True
-
-    def __str__(self):
-        return str(self.title)
-
-    def get_absolute_url(self):
-        return reverse("article_detail", kwargs={"slug": self.slug})
-'''
 class PaymentCard(models.Model):
     card_number = EncryptedIntegerField()
     expiration_date = EncryptedDateField()
