@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import PaymentCard, Profile, Booking
+from .models import PaymentCard, Profile, Booking, Ticket
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -43,4 +43,9 @@ class BookingForm(ModelForm):
 
     class Meta:
         model = Booking
-        fields = ['number_tickets']
+        fields = ['number_adult', 'number_child', 'number_senior']
+
+class TicketForm():
+     class Meta:
+         model = Ticket
+         fields = ['ticket_type']

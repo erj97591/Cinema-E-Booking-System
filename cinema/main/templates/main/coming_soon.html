@@ -22,7 +22,7 @@
      
     </head>
 <body>
-  <section style=" background-image: linear-gradient(black, steelblue);">
+  <section style=" background-image: linear-gradient(black, steelblue); height: 1600px;">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
           <img class="logo-image" src="{% static 'main./logo.jpg' %}" height="54" width="54">
@@ -111,6 +111,8 @@
       </div>
       <div class="col lg-4">{% video movie.trailer 'tiny' %}</div> 
     </div>
+    <br>
+    <br>
     {% endfor %}
     {% endif %}
  </div>    

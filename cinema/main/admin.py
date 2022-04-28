@@ -2,7 +2,7 @@ from datetime import date
 
 from django.contrib import admin
 
-from .models import PaymentCard, Profile, Movie, Promotion, ShowTime, ShowRoom, Ticket
+from .models import Booking, PaymentCard, Profile, Movie, Promotion, ShowTime, ShowRoom, Ticket
 
 class PromotionPermissions(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
@@ -56,11 +56,12 @@ class ShowRoomPermission(admin.ModelAdmin):
             return ordered_output
 # Register your models here.
 admin.site.register(Profile)
-admin.site.register(PaymentCard)
+#admin.site.register(PaymentCard)
 admin.site.register(Movie)
 admin.site.register(ShowRoom, ShowRoomPermission)
 admin.site.register(Promotion, PromotionPermissions)
 admin.site.register(Ticket)
+admin.site.register(Booking)
 admin.site.site_header = "A4 Cinema"
 admin.site.site_title = "A4 Cinema Admin"
 admin.site.index_title = "Administration"

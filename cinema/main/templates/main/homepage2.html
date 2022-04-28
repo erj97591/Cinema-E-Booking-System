@@ -20,6 +20,7 @@
   </head>
 
 <body>
+  <section style=" background-image: linear-gradient(black, steelblue); height: 2500px;">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
           <img class="logo-image" src="{% static 'main./logo.jpg' %}" height="54" width="54">
@@ -99,11 +100,12 @@
       </div>
     
 
-      <section>
+      {% load embed_video_tags %}
+      {% block page_content %}
+
         {% if smovies.all %} 
         <h3 class="part1" id="now-showing">NOW PLAYING</h3>     
         {% for movie in smovies %}  
-        {% if movie.isShowing %}
         <div class="row py-5">
             <div class="col lg-4">
               <div class="card">
@@ -122,13 +124,13 @@
               </div>
             </div>
         </div>
-        {% endif %}
+        <br>
+        <br>
         {% endfor %}
         {% endif %}
         {% if cmovies.all %} 
         <h3  class="part2"  id="coming-soon">COMING SOON</a></h3>
         {% for movie in cmovies %}  
-        {% if not movie.isShowing %}
         <div class="row py-5">          
           <div class="col lg-4">
             <div class="card">
@@ -145,7 +147,8 @@
             </div>
           </div>
         </div>
-        {% endif %}
+        <br>
+        <br>
         {% endfor %}
         {% endif %}
       </div>
@@ -154,4 +157,4 @@
   </section> 
 
 </body>
-
+{%endblock%}

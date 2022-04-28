@@ -4,12 +4,8 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmVie
 from django.urls import path
 
 from .views import registration_page, home_page, activation_sent_view, activate, login_page, home_page_loggedin, \
-    profile_page, logout_page, add_payment, edit_profile_page, search_bar, movie_info, coming_soon, action_movie, adventure_movie, animation_movie, comedy_movie, drama_movie, scifi_movie, thriller_movie, book_movie
+    profile_page, logout_page, add_payment, edit_profile_page, search_bar, movie_info, coming_soon, action_movie, adventure_movie, animation_movie, comedy_movie, drama_movie, scifi_movie, thriller_movie, book_movie, book_ticket, book_seat
 
-# admin header customization
-admin.site.site_header = "A4 Cinema"
-admin.site.site_title = "A4 Cinema Admin"
-admin.site.index_title = "Administration"
 
 
 urlpatterns = [
@@ -34,6 +30,8 @@ urlpatterns = [
     path("thriller/", thriller_movie, name="thriller_movie"),
     path("soon/", coming_soon, name = "coming_soon"),
     path("booking/<slug>/", book_movie, name="book_movie"),
+    path("tickets/<slug>/", book_ticket, name="book_ticket"),
+    path("seats/<slug>/", book_seat, name="book_seat"),
     path("<slug>/", movie_info, name="movie_info"),
 
     #path('movie/<int:pk>', views.MovieDetailView.as_view(), name='movie_info'),

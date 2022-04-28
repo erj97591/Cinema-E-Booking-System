@@ -10,9 +10,9 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.db.models import Q
-from .forms import RegistrationForm, PaymentForm, BookingForm
+from .forms import RegistrationForm, PaymentForm, BookingForm, TicketForm
 from .forms import UserUpdateForm, ProfileUpdateForm
-from .models import PaymentCard, Movie, ShowTime
+from .models import Booking, PaymentCard, Movie, ShowTime, Ticket
 from .tokens import account_activation_token
 from django.views.generic import ListView
 
@@ -127,24 +127,85 @@ def thriller_movie(request):
     context = {'smovies': smovies, 'cmovies' : cmovies}
     return render(request, 'main/thriller.html', context)
 
-'''
-def booking_movie(request):
+
+def book_ticket(request, slug):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    context = {}
+    showtime = get_object_or_404(ShowTime, slug=slug)
+    if request.method == 'POST':
+        b_form = BookingForm(request.POST)
+        if b_form.is_valid():
+            Booking = b_form.save(commit=False)  
+            Booking.number_adult = b_form.cleaned_data.get('number_adult')
+            Booking.number_child = b_form.cleaned_data.get('number_child')
+            Booking.number_senior = b_form.cleaned_data.get('number_senior')
+            Booking.showtime = get_object_or_404(ShowTime, slug=slug)
+            Booking.user = User.objects.get(pk=request.user.id)
+            Booking.save()
+            return redirect('book_seat', slug=slug)
+    else:
+        b_form = BookingForm()  
+    context = {'b_form': b_form, 'showtime': showtime}
+    return render(request, 'main/tickets.html', context)
+
+def book_seat(request, slug):
+    context = {}
+    showtime = get_object_or_404(ShowTime, slug=slug)
+    tickets = Ticket.objects.filter(showtime=showtime)
+    #card = PaymentCard.objects.filter(user=request.user)
+    #booking = Booking.objects.filter(user=request.user, showtime=showtime)
+    #data = booking
+    #context = {'booking': booking}
+    context = {'tickets': tickets}
+    return render(request, 'main/seats.html', context)
+
+''' 
+   if request.method == 'POST':
+        b_form = BookingForm(request.POST)
+        t_form = TicketForm(request.POST)
+        if b_form.is_valid() and t_form.is_valid():
+            Booking = b_form.save(commit=False)
+            Booking.number_tickets = b_form.cleaned_data.get('number_tickets')
+            Booking.booking_status = "active"
+            #PaymentCard.expiration_date = form.cleaned_data.get(
+            #    'expiration_date')
+            #Booking.user = User.objects.get(pk=request.user.id)
+            Booking.save()
+            Ticket = t_form.save(commit=False)
+            Ticket.ticket_type = b_form.cleaned_data.get('ticket_type')
+            Ticket.booking = Booking
+            Ticket.save()
+            return redirect('booking_movie')
+    else:
+        b_form = BookingForm()
+        t_form = TicketForm()
+    context = {'b_form': b_form, 't_form' : t_form}
+    return render(request, 'main/book_movie.html', context)
+
+def edit_profile_page(request):
     if not request.user.is_authenticated:
         return redirect('login_page')
     if request.method == 'POST':
-        form = BookingForm(request.POST)
-        if form.is_valid():
-            Booking = form.save(commit=False)
-            Booking.number_tickets = form.cleaned_data.get('number_tickets')
-            #PaymentCard.expiration_date = form.cleaned_data.get(
-            #    'expiration_date')
-            Booking.user = User.objects.get(pk=request.user.id)
-            Booking.save()
-
+        p_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile)
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        if p_form.is_valid() and u_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, 'Your Profile has been updated!')
             return redirect('profile_page')
     else:
-        form = BookingForm()
-    return render(request, 'main/book_movie.html', {'form': form})
+        current_user = request.user
+        current_profile = request.user.profile
+        p_form = ProfileUpdateForm(
+            initial={'phone_number': current_profile.phone_number, 'address': current_profile.address,
+                     'promotions': current_profile.promotions}, instance=request.user)
+        u_form = UserUpdateForm(initial={'first_name': current_user.first_name, 'last_name': current_user.last_name},
+                                instance=request.user.profile)
+
+    context = {'p_form': p_form, 'u_form': u_form}
+    return render(request, 'main/edit_profile.html', context)
 '''
 def book_movie(request, slug):
     context = {}
@@ -153,6 +214,33 @@ def book_movie(request, slug):
     context = {'movie': movie, 'shows': shows}
     return render(request, 'main/book_movie.html', context)
 
+
+
+'''
+def movie_info(request, primary_key):
+    try:
+        movie = Movie.objects.get(pk=primary_key)
+    except Movie.DoesNotExist:
+        raise Http404('Movie does not exist')
+
+    return render(request, 'main/movie_info.html', context={'movie': movie})
+
+class SearchResultsView(ListView):
+    model = Movie
+    template_name = "main/search.html"
+
+    def get_queryset(self): # new
+        result = super(SearchResultsView, self).get_queryset()
+        query = self.request.GET.get("search")
+        print(query)
+        if query:
+            object_list = Movie.objects.filter(
+                Q(title__icontains=query) | Q(category__icontains=query)
+            )
+        else:
+            result = None
+        return result
+'''
 def activation_sent_view(request):
     return render(request, 'main/activation_sent.html')
 

@@ -55,7 +55,7 @@ background-image: linear-gradient(black, steelblue);
                 <a class="nav-link active" aria-current="page" href="{% url 'home2' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#coming-soon">Coming Soon</a>
+                <a class="nav-link" href="{% url 'coming_soon' %}">Coming Soon</a>
               </li>
              
               <li class="nav-item">
@@ -67,12 +67,13 @@ background-image: linear-gradient(black, steelblue);
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Adventure</a></li>
-                    <li><a class="dropdown-item" href="#">Animation</a></li>
-                    <li><a class="dropdown-item" href="#">Comedy</a></li>
-                    <li><a class="dropdown-item" href="#">Drama</a></li>
-                    <li><a class="dropdown-item" href="#">Sci-Fi</a></li>
-                    <li><a class="dropdown-item" href="#">Thriller</a></li>
+                    <li><a class="dropdown-item" href="{% url 'action_movie' %}">Action</a></li>
+                    <li><a class="dropdown-item" href="{% url 'adventure_movie' %}">Adventure</a></li>
+                    <li><a class="dropdown-item" href="{% url 'animation_movie' %}">Animation</a></li>
+                    <li><a class="dropdown-item" href="{% url 'comedy_movie' %}">Comedy</a></li>
+                    <li><a class="dropdown-item" href="{% url 'drama_movie' %}">Drama</a></li>
+                    <li><a class="dropdown-item" href="{% url 'scifi_movie' %}">Sci-Fi</a></li>
+                    <li><a class="dropdown-item" href="{% url 'thriller_movie' %}">Thriller</a></li>
                   </ul>
                   </li>
           
@@ -109,7 +110,8 @@ background-image: linear-gradient(black, steelblue);
             <h1> Showtimes for: </h1>
             <h1> {{ movie.title }}</h1>
             {% for i in shows %}
-                <a class="btn btn-success btn-block btn-lg gradient-custom-4 text-body mb-3" style="width: 400px" href='/booking/'>{{ i.date }}  {{i.time}}</a>
+              {{ i.create_tickets }}
+                <a class="btn btn-success btn-block btn-lg gradient-custom-4 text-body mb-3" style="width: 400px" href="{% url 'book_ticket' i.slug %}">{{ i.date }}  {{i.time}}</a>
             {% endfor %}
         </section>
 </body>
