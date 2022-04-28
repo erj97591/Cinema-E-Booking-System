@@ -15,6 +15,9 @@ from .forms import UserUpdateForm, ProfileUpdateForm
 from .models import Booking, PaymentCard, Movie, ShowTime, Ticket
 from .tokens import account_activation_token
 from django.views.generic import ListView
+from django.urls import reverse
+from urllib.parse import urlencode
+
 
 #def home_page(request):
 #    return render(request, 'main/homepage1.html')
@@ -143,7 +146,12 @@ def book_ticket(request, slug):
             Booking.showtime = get_object_or_404(ShowTime, slug=slug)
             Booking.user = User.objects.get(pk=request.user.id)
             Booking.save()
-            return redirect('book_seat', slug=slug)
+            booking = Booking
+            base_url = reverse('book_seat', kwargs={'slug': slug})  # 1 /products/
+            query_string =  urlencode({'booking': booking})  # 2 category=42
+            url = '{}?{}'.format(base_url, query_string)
+            return redirect(url, slug=slug)
+            #return redirect('book_seat', slug=slug)
     else:
         b_form = BookingForm()  
     context = {'b_form': b_form, 'showtime': showtime}
@@ -153,11 +161,14 @@ def book_seat(request, slug):
     context = {}
     showtime = get_object_or_404(ShowTime, slug=slug)
     tickets = Ticket.objects.filter(showtime=showtime)
+    bookingid = request.GET.get('booking')
+    bookingvar = Booking.objects.filter(booking_id = bookingid)
+    print(f'{bookingvar} is null?')
     #card = PaymentCard.objects.filter(user=request.user)
     #booking = Booking.objects.filter(user=request.user, showtime=showtime)
     #data = booking
     #context = {'booking': booking}
-    context = {'tickets': tickets}
+    context = {'tickets': tickets, 'booking': bookingvar}
     return render(request, 'main/seats.html', context)
 
 ''' 

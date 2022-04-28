@@ -97,7 +97,7 @@ class ShowTime(models.Model):
     def create_tickets(self):
         if not Ticket.objects.filter(showtime=self).exists():
             for seat in range(self.show_room.number_seats):
-                Ticket(ticket_id=seat, showtime=self).save()
+                Ticket(ticket_id=seat+1, showtime=self).save()
 
 class Promotion(models.Model):
     promo_id = models.IntegerField()

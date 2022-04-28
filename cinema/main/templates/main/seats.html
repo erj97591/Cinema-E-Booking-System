@@ -1,9 +1,29 @@
-<!doctype html>
-<html lang="en">
-{% block page_content %}
-
-{% for t in tickets %}
-    <input type="checkbox" name="seats" value="{{ t.ticket_id }}">{{ t.ticket_id }}<br> 
-{% endfor %}
-{%endblock%}
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Bootstrap Example</title>
+      <link href = "/bootstrap/css/bootstrap.min.css" rel = "stylesheet">
+      <script src = "/scripts/jquery.min.js"></script>
+      <script src = "/bootstrap/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class = "container">
+         <p>Select your seats</p>
+         <form>
+    {% block page_content %}
+    {{ booking.number_adult }}
+    {% for t in tickets %}
+             {% if t.id|divisibleby:"5"  %}
+             <input type = "checkbox" value = "">{{ t.ticket_id}}
+<br>
+             {% else %}
+             <label class = "checkbox-inline">
+               <input type = "checkbox" value = "">{{ t.ticket_id }}
+            </label>
+{% endif %}
+             {% endfor %}
+    {%endblock%}
+         </form>
+      </div>
+   </body>
 </html>
