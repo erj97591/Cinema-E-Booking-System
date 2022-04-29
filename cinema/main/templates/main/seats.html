@@ -11,19 +11,23 @@
          <p>Select your seats</p>
          <form>
     {% block page_content %}
-    {{ booking.number_adult }}
+    {{ number_seats }}
     {% for t in tickets %}
              {% if t.id|divisibleby:"5"  %}
-             <input type = "checkbox" value = "">{{ t.ticket_id}}
+             <input type = "checkbox" value = "{{t.ticket_id}}">{{ t.ticket_id}}
 <br>
              {% else %}
              <label class = "checkbox-inline">
-               <input type = "checkbox" value = "">{{ t.ticket_id }}
+               <input type = "checkbox" value = "{{t.ticket_id}}">{{ t.ticket_id }}
             </label>
 {% endif %}
              {% endfor %}
-    {%endblock%}
-         </form>
+    <form class="d-flex" method="get">
+    <button type="submit">Book</button>   
+    </form>      
+</form>
+
       </div>
    </body>
 </html>
+{%endblock%}

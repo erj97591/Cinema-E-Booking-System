@@ -162,14 +162,24 @@ def book_seat(request, slug):
     showtime = get_object_or_404(ShowTime, slug=slug)
     tickets = Ticket.objects.filter(showtime=showtime)
     bookingid = request.GET.get('booking')
-    bookingvar = Booking.objects.filter(booking_id = bookingid)
-    print(f'{bookingvar} is null?')
+    bookingvar = Booking.objects.get(booking_id = bookingid)
+    number_seats = bookingvar.number_tickets()
+    if request.method == 'GET':
+        print(request)
+        submitbutton = request.GET.get('submit')
+        if submitbutton:
+            #return redirect('checkout')
+            checked_tickets = Ticket.objects.filter(id=request.POST.filter('ticket_id'))
+    #print(f'{bookingvar} is null?')
     #card = PaymentCard.objects.filter(user=request.user)
     #booking = Booking.objects.filter(user=request.user, showtime=showtime)
     #data = booking
     #context = {'booking': booking}
-    context = {'tickets': tickets, 'booking': bookingvar}
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats}
     return render(request, 'main/seats.html', context)
+
+def checkout(request):
+    return render(request, 'main/checkout.html')
 
 ''' 
    if request.method == 'POST':
