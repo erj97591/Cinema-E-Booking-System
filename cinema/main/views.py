@@ -164,18 +164,21 @@ def book_seat(request, slug):
     bookingid = request.GET.get('booking')
     bookingvar = Booking.objects.get(booking_id = bookingid)
     number_seats = bookingvar.number_tickets()
-    if request.method == 'GET':
-        print(request)
-        submitbutton = request.GET.get('submit')
-        if submitbutton:
+    if request.method == 'POST':
+        #in html action: /seats/{{show.slug}}/?booking={{bookingid}}
+        check_values = request.POST.getlist('tag')
+        print(check_values)
+        if len(check_values) == number_seats:
+            return redirect('checkout')
+        #if submitbutton:
             #return redirect('checkout')
-            checked_tickets = Ticket.objects.filter(id=request.POST.filter('ticket_id'))
+            #checked_tickets = Ticket.objects.filter(id=request.POST.filter('ticket_id'))
     #print(f'{bookingvar} is null?')
     #card = PaymentCard.objects.filter(user=request.user)
     #booking = Booking.objects.filter(user=request.user, showtime=showtime)
     #data = booking
     #context = {'booking': booking}
-    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats}
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'show': showtime, 'bookingid': bookingid}
     return render(request, 'main/seats.html', context)
 
 def checkout(request):

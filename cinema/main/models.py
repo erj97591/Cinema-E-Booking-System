@@ -119,6 +119,7 @@ class Booking(models.Model):
      booking_status = models.CharField(max_length=100, default = "inactive")
      showtime = models.ForeignKey(ShowTime, on_delete=models.CASCADE, null=True)
      user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+     #tickets = MultiSelectField(choices = )
 
      def __str__(self):
         return str(self.booking_id)

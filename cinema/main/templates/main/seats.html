@@ -9,22 +9,22 @@
    <body>
       <div class = "container">
          <p>Select your seats</p>
-         <form>
+
+    <form class="d-flex" method="POST" action="">
+        {%csrf_token%}
     {% block page_content %}
     {{ number_seats }}
     {% for t in tickets %}
              {% if t.id|divisibleby:"5"  %}
-             <input type = "checkbox" value = "{{t.ticket_id}}">{{ t.ticket_id}}
+             <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
 <br>
              {% else %}
              <label class = "checkbox-inline">
-               <input type = "checkbox" value = "{{t.ticket_id}}">{{ t.ticket_id }}
+               <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id }}
             </label>
-{% endif %}
+            {% endif %}
              {% endfor %}
-    <form class="d-flex" method="get">
-    <button type="submit">Book</button>   
-    </form>      
+    <button type="submit" name="submit" value="">Book</button>   
 </form>
 
       </div>
