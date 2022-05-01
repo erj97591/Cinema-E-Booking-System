@@ -132,38 +132,11 @@ class Ticket(models.Model):
     booking = models.ForeignKey(Booking, related_name='tickets', on_delete=models.CASCADE, null=True)
     showtime = models.ForeignKey(ShowTime, on_delete=models.CASCADE, null=True)
     reserved = models.BooleanField(default=False)
-
-
-'''
-class Movie(models.Model):
-    #STATUS_CHOICE = (
-     #   ('coming_soon', 'Coming_Soon'),
-      #  ('showing', 'Showing'),
-    #)
-    title = models.CharField(max_length=100)
-    cast = models.CharField(max_length=500)
-    trailer = models.URLField(default="https://www.youtube.com/watch?v=iw_wt2hHW2w")
-    synopsis = models.CharField(max_length=500)
-    category = models.CharField(max_length=100)
-    director = models.CharField(max_length=100)
-    producer = models.CharField(max_length=100)
-    picture =  models.ImageField(blank=True, upload_to='movies/')
-    rating = models.CharField(max_length=100, null=True)
-    #status = models.CharField(max_length=10,choices=STATUS_CHOICE,default='coming_soon')
-    showing = models.BooleanField(default=False)
-    showtimes = models.ManyToManyField(ShowTime, related_name="movies")
-    #, blank=True, null=True
-    slug = models.SlugField(null=True, default=title)
-
-    def isShowing(self):
-        return True
-
+    
     def __str__(self):
-        return str(self.title)
+        return str(self.ticket_id)
 
-    def get_absolute_url(self):
-        return reverse("article_detail", kwargs={"slug": self.slug})
-'''
+
 class PaymentCard(models.Model):
     card_number = EncryptedIntegerField()
     expiration_date = EncryptedDateField()

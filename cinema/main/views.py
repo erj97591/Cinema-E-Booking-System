@@ -147,8 +147,8 @@ def book_ticket(request, slug):
             Booking.user = User.objects.get(pk=request.user.id)
             Booking.save()
             booking = Booking
-            base_url = reverse('book_seat', kwargs={'slug': slug})  # 1 /products/
-            query_string =  urlencode({'booking': booking})  # 2 category=42
+            base_url = reverse('book_seat', kwargs={'slug': slug}) 
+            query_string =  urlencode({'booking': booking}) 
             url = '{}?{}'.format(base_url, query_string)
             return redirect(url, slug=slug)
             #return redirect('book_seat', slug=slug)
@@ -164,73 +164,43 @@ def book_seat(request, slug):
     bookingid = request.GET.get('booking')
     bookingvar = Booking.objects.get(booking_id = bookingid)
     number_seats = bookingvar.number_tickets()
+    flag = False
     if request.method == 'POST':
         #in html action: /seats/{{show.slug}}/?booking={{bookingid}}
         check_values = request.POST.getlist('tag')
         print(check_values)
         if len(check_values) == number_seats:
-            return redirect('checkout')
-        #if submitbutton:
+            for seat in check_values:
+                logseat = Ticket.objects.get(ticket_id=seat)
+                logseat.booking = bookingvar
+                logseat.reserved = True
+                logseat.save()
+            base_url = reverse('checkout', kwargs={'slug': slug}) 
+            query_string =  urlencode({'booking': bookingvar}) 
+            url = '{}?{}'.format(base_url, query_string)
+            return redirect(url, slug=slug)
             #return redirect('checkout')
-            #checked_tickets = Ticket.objects.filter(id=request.POST.filter('ticket_id'))
-    #print(f'{bookingvar} is null?')
-    #card = PaymentCard.objects.filter(user=request.user)
-    #booking = Booking.objects.filter(user=request.user, showtime=showtime)
-    #data = booking
-    #context = {'booking': booking}
-    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'show': showtime, 'bookingid': bookingid}
+        else:
+            flag = True
+            context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'show': showtime, 'bookingid': bookingid, 'flag': flag}
+            return render(request, 'main/seats.html', context)
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'show': showtime, 'bookingid': bookingid, 'flag': flag}
     return render(request, 'main/seats.html', context)
 
-def checkout(request):
-    return render(request, 'main/checkout.html')
+def checkout(request, slug):
+    context = {}
+    showtime = get_object_or_404(ShowTime, slug=slug)
+    tickets = Ticket.objects.filter(showtime=showtime)
+    bookingid = request.GET.get('booking')
+    bookingvar = Booking.objects.get(booking_id = bookingid)
+    number_seats = bookingvar.number_tickets()
+    seats = Ticket.objects.filter(booking = bookingvar)
+    price = bookingvar.number_adult + bookingvar.number_child + bookingvar.number_senior
+    data = request.user.profile
+    card = PaymentCard.objects.filter(user=request.user)
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card}
+    return render(request, 'main/checkout.html', context)
 
-''' 
-   if request.method == 'POST':
-        b_form = BookingForm(request.POST)
-        t_form = TicketForm(request.POST)
-        if b_form.is_valid() and t_form.is_valid():
-            Booking = b_form.save(commit=False)
-            Booking.number_tickets = b_form.cleaned_data.get('number_tickets')
-            Booking.booking_status = "active"
-            #PaymentCard.expiration_date = form.cleaned_data.get(
-            #    'expiration_date')
-            #Booking.user = User.objects.get(pk=request.user.id)
-            Booking.save()
-            Ticket = t_form.save(commit=False)
-            Ticket.ticket_type = b_form.cleaned_data.get('ticket_type')
-            Ticket.booking = Booking
-            Ticket.save()
-            return redirect('booking_movie')
-    else:
-        b_form = BookingForm()
-        t_form = TicketForm()
-    context = {'b_form': b_form, 't_form' : t_form}
-    return render(request, 'main/book_movie.html', context)
-
-def edit_profile_page(request):
-    if not request.user.is_authenticated:
-        return redirect('login_page')
-    if request.method == 'POST':
-        p_form = ProfileUpdateForm(
-            request.POST, request.FILES, instance=request.user.profile)
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        if p_form.is_valid() and u_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.success(request, 'Your Profile has been updated!')
-            return redirect('profile_page')
-    else:
-        current_user = request.user
-        current_profile = request.user.profile
-        p_form = ProfileUpdateForm(
-            initial={'phone_number': current_profile.phone_number, 'address': current_profile.address,
-                     'promotions': current_profile.promotions}, instance=request.user)
-        u_form = UserUpdateForm(initial={'first_name': current_user.first_name, 'last_name': current_user.last_name},
-                                instance=request.user.profile)
-
-    context = {'p_form': p_form, 'u_form': u_form}
-    return render(request, 'main/edit_profile.html', context)
-'''
 def book_movie(request, slug):
     context = {}
     movie = get_object_or_404(Movie, slug=slug)
@@ -239,32 +209,6 @@ def book_movie(request, slug):
     return render(request, 'main/book_movie.html', context)
 
 
-
-'''
-def movie_info(request, primary_key):
-    try:
-        movie = Movie.objects.get(pk=primary_key)
-    except Movie.DoesNotExist:
-        raise Http404('Movie does not exist')
-
-    return render(request, 'main/movie_info.html', context={'movie': movie})
-
-class SearchResultsView(ListView):
-    model = Movie
-    template_name = "main/search.html"
-
-    def get_queryset(self): # new
-        result = super(SearchResultsView, self).get_queryset()
-        query = self.request.GET.get("search")
-        print(query)
-        if query:
-            object_list = Movie.objects.filter(
-                Q(title__icontains=query) | Q(category__icontains=query)
-            )
-        else:
-            result = None
-        return result
-'''
 def activation_sent_view(request):
     return render(request, 'main/activation_sent.html')
 

@@ -13,7 +13,6 @@
     <form class="d-flex" method="POST" action="">
         {%csrf_token%}
     {% block page_content %}
-    {{ number_seats }}
     {% for t in tickets %}
              {% if t.id|divisibleby:"5"  %}
              <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
@@ -26,7 +25,9 @@
              {% endfor %}
     <button type="submit" name="submit" value="">Book</button>   
 </form>
-
+{% if flag %}
+<p>Please select {{ number_seats }}!</p>
+{% endif %}
       </div>
    </body>
 </html>

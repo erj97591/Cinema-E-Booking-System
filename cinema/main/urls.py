@@ -32,7 +32,7 @@ urlpatterns = [
     path("booking/<slug>/", book_movie, name="book_movie"),
     path("tickets/<slug>/", book_ticket, name="book_ticket"),
     path("seats/<slug>/", book_seat, name="book_seat"),
-    path("checkout/", checkout, name="checkout"),
+    path("checkout/<slug>/", checkout, name="checkout"),
     path("<slug>/", movie_info, name="movie_info"),
 
     #path('movie/<int:pk>', views.MovieDetailView.as_view(), name='movie_info'),
