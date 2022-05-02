@@ -198,7 +198,8 @@ def checkout(request, slug):
     price = bookingvar.number_adult + bookingvar.number_child + bookingvar.number_senior
     data = request.user.profile
     card = PaymentCard.objects.filter(user=request.user)
-    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card}
+    form = PaymentForm()
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card, 'form': form}
     return render(request, 'main/checkout.html', context)
 
 def book_movie(request, slug):

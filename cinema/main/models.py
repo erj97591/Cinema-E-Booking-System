@@ -110,9 +110,8 @@ class Promotion(models.Model):
         return str(self.promo_id)
 
 class Booking(models.Model):
-     #booking_id = models.IntegerField()
+
      booking_id = models.AutoField(primary_key=True)
-     #number_tickets = models.IntegerField()
      number_adult = models.IntegerField(null=True, blank=True, default="0")
      number_child = models.IntegerField(null=True, blank=True, default="0")
      number_senior = models.IntegerField(null=True, blank=True, default="0")

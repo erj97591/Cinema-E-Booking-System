@@ -15,11 +15,20 @@
     {% block page_content %}
     {% for t in tickets %}
              {% if t.id|divisibleby:"5"  %}
-             <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
+                {% if t.reserved %}
+        <input type = "checkbox"  disabled ="disabled" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
+        {% else %}
+        <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
+        {% endif %}
+
 <br>
              {% else %}
              <label class = "checkbox-inline">
-               <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id }}
+             {% if t.reserved %}
+        <input type = "checkbox"  disabled ="disabled" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
+        {% else %}
+        <input type = "checkbox" value = "{{t.ticket_id}}" id = "{{t.ticket_id}}" name="tag" {% if t.reserved %}checked{% endif %}>{{ t.ticket_id}}
+        {% endif %}
             </label>
             {% endif %}
              {% endfor %}

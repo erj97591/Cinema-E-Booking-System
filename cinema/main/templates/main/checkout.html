@@ -22,13 +22,53 @@ Number of Tickets: {{ number_seats }}
 
 <p>Price: {{ price }}</p>
 
-<p>Select a method of payment:</p>
+
 {% if card %}
+<p>Select a method of payment:</p>
     <p> Your cards: </p>
     {% for i in card %}
         {{ card.card_number }}
     {% endfor %}
-{% endif%}
+{% if card.count < 3 %}
+  <p> Or Add a Payment </p>
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </p>
+              {% endfor %}
+              <button type="submit">Add</button>
+            </form>
+
+{% endif %}
+{% else %}
+  <p> ? </p>
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </p>
+              {% endfor %}
+              <button type="submit">Add</button>
+            </form>
+{% endif %}
+
 
 {%endblock%}
 </html>
