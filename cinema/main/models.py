@@ -140,6 +140,16 @@ class PaymentCard(models.Model):
     card_number = EncryptedIntegerField()
     expiration_date = EncryptedDateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    @property
+    def card_view(self):
+        card = str(self.card_number)
+        card = card[len(card) -4: len(card)]
+        card = '*****' + card
+        return card
+
+    @card_view.setter
+    def card_view(self, value):
+        self.card_number = value
 
     def __str__(self):
         return str(self.card_number)
