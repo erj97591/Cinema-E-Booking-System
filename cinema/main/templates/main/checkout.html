@@ -24,11 +24,7 @@ Number of Tickets: {{ number_seats }}
 
 
 {% if card %}
-<p>Select a method of payment:</p>
-    <p> Your cards: </p>
-    {% for i in card %}
-        {{ card.card_number }}
-    {% endfor %}
+
 {% if card.count < 3 %}
   <p> Or Add a Payment </p>
             <form method="post">
@@ -50,7 +46,7 @@ Number of Tickets: {{ number_seats }}
 
 {% endif %}
 {% else %}
-  <p> ? </p>
+  <p> Add a Payment </p>
             <form method="post">
               {% csrf_token %}
               {% for field in form %}
@@ -69,6 +65,17 @@ Number of Tickets: {{ number_seats }}
             </form>
 {% endif %}
 
-
+<form method="post">
+    {% csrf_token %}
+    <p>Select a method of payment:</p>
+        {% if card %}
+    <p> Your cards: </p>
+    {% for i in card %}
+    <input type = "checkbox" value = "{{ i.card_number }}" id = "{{ i.card_number }}" name="card" >
+        {{ i.card_view }}
+    {% endfor %}
+    {% endif %}
+<button type="submit" >Submit Order</button>
+</form>
 {%endblock%}
 </html>

@@ -2,8 +2,7 @@ from datetime import date
 
 from django.contrib import admin
 
-from .models import Booking, PaymentCard, Profile, Movie, Promotion, ShowTime, ShowRoom, Ticket
-
+from .models import Booking, PaymentCard, Profile, Movie, Promotion, ShowTime, ShowRoom, Ticket, TicketType
 class PromotionPermissions(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         # print(f'has_change_permission_request: {request}') #simply test code
@@ -54,6 +53,17 @@ class ShowRoomPermission(admin.ModelAdmin):
             for x in ordered_display:
                 ordered_output += str(x)
             return ordered_output
+class TicketTypePermissions(admin.ModelAdmin):
+
+
+    def has_add_permission(self, request):
+        if TicketType.objects.all().count() > 0:
+            return False
+        else:
+            return True
+
+    # This method makes sure you don't delete a sent promotion until after the promotion expires.
+
 # Register your models here.
 admin.site.register(Profile)
 #admin.site.register(PaymentCard)
@@ -65,4 +75,5 @@ admin.site.register(Booking)
 admin.site.site_header = "A4 Cinema"
 admin.site.site_title = "A4 Cinema Admin"
 admin.site.index_title = "Administration"
+admin.site.register(TicketType, TicketTypePermissions)
 #
