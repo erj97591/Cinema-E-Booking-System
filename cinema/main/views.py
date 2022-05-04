@@ -18,9 +18,6 @@ from django.views.generic import ListView
 from django.urls import reverse
 from urllib.parse import urlencode
 
-
-#def home_page(request):
-#    return render(request, 'main/homepage1.html')
 def home_page(request):
     obj = Movie.objects.all()
     smovies = obj.exclude(showtimes__isnull=True)
@@ -39,9 +36,7 @@ def home_page_loggedin(request):
 
 def search_bar(request):
     if request.method == "GET":
-        #print(request.POST)
         search = request.GET.get('search')
-        #print(search)
         submitbutton = request.GET.get('submit')
         if search is not None:
             lookups= Q(title__icontains=search) | Q(category__icontains=search)
