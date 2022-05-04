@@ -198,8 +198,55 @@ def checkout(request, slug):
     price = bookingvar.number_adult + bookingvar.number_child + bookingvar.number_senior
     data = request.user.profile
     card = PaymentCard.objects.filter(user=request.user)
+<<<<<<< Updated upstream
     context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card}
     return render(request, 'main/checkout.html', context)
+
+def book_movie(request, slug):
+    context = {}
+    movie = get_object_or_404(Movie, slug=slug)
+    shows = movie.showtimes.all()
+    context = {'movie': movie, 'shows': shows}
+    return render(request, 'main/book_movie.html', context)
+
+=======
+    form = PaymentForm()
+    form = PaymentForm()
+    if request.method == 'POST':
+        print(request.POST)
+        card_select = request.POST.getlist('selected')
+        print(card_select)
+        if len(card_select) != None:
+            base_url = reverse('checkout_confirm', kwargs={'slug': slug}) 
+            query_string =  urlencode({'booking': bookingvar}) 
+            url = '{}?{}'.format(base_url, query_string)
+            return redirect(url, slug=slug)
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            paymentCard = form.save(commit=False)
+            paymentCard.card_number = form.cleaned_data.get('card_number')
+            paymentCard.expiration_date = form.cleaned_data.get(
+                'expiration_date')
+            paymentCard.user = User.objects.get(pk=request.user.id)
+            paymentCard.save()
+            
+
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card, 'form': form}
+    return render(request, 'main/checkout.html', context)
+
+def checkout_confirm(request, slug):
+    context = {}
+    showtime = get_object_or_404(ShowTime, slug=slug)
+    tickets = Ticket.objects.filter(showtime=showtime)
+    bookingid = request.GET.get('booking')
+    bookingvar = Booking.objects.get(booking_id = bookingid)
+    number_seats = bookingvar.number_tickets()
+    seats = Ticket.objects.filter(booking = bookingvar)
+    price = bookingvar.number_adult + bookingvar.number_child + bookingvar.number_senior
+    data = request.user.profile
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price}
+    return render(request, 'main/checkout_confirm.html', context)
+>>>>>>> Stashed changes
 
 def book_movie(request, slug):
     context = {}

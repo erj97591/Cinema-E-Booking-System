@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tickets page</title>
+  <p>Your order for is complete!</p>
   <!-- Link style.css here-->
   {% load static %}
   <link href="{% static 'main./navbarstyle.css' %}" rel="stylesheet">
@@ -25,6 +25,16 @@
 
 </head>
 
+<style>
+  p {
+    color: white;
+  }
+  .heading {
+    font-size: 20px;
+    font-weight: 600;
+  }
+</style>
+
 <body>
   <section style="background-image: linear-gradient(black, steelblue); height: 1000px;">
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -42,14 +52,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'coming_soon' %}">Coming Soon</a>
             </li>
-
-<<<<<<< Updated upstream
-            <li class="nav-item">
-              <a class="nav-link" href="./seats.html">Show Times</a>
-            </li>
-
-=======
->>>>>>> Stashed changes
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
@@ -94,42 +96,40 @@
       </div>
       </div>
     </nav>
-    
-    {% block page_content %}
-    <br>
-    <br>
-    <p style="color: white; text-align: center; font-size:20px;">Tickets for: {{ showtime.movie.title }}</p>
-    <p style="color: white; text-align: center; font-size:20px;"> at {{ showtime.time }} on {{ showtime.date }}</p>
-    
-    <br>
-        <br>
-    <form class="d-flex" method="post" style="text-align: center; margin-left: 45vw;">
-      
-        {% csrf_token %}
-        <div>
-        {% for field in b_form %}
-        
-        <p style="color: white; text-align: center; font-size:20px;">
-          
-          {{ field.label_tag }}<br><br>
-          {{ field }}
-          
-          {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
+{% block page_content %}
+<p class="heading" style="text-align: center; margin-top: 80px;">Booking for {{ user.username }}</p>
+<p class="heading"  style="text-align: center;">Tickets for: {{ showtime.movie.title }}</p>
+<p class="heading"  style="text-align: center;"> at {{ showtime.time }} on {{ showtime.date }}</p>
+<div class="row row-cols justify-content-center" style="text-align: center; margin-top: 40px;">
+    <div style="color: white; margin-bottom: 10px;">
+      <p>
+        <span class="heading">Number of Tickets: </span><span>{{ number_seats }}</span>
+      </p>
+      <p>
+        {% if booking.number_adult %}
+        <span class="heading">Adult:  </span><span>{{ booking.number_adult }}</span>
+        {% endif %}
+      </p>
+      <p>
+          {% if booking.number_child %}
+          <span class="heading">Child:  </span><span>{{ booking.number_child }}</span>
           {% endif %}
-          {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-        {% endfor %}
-        </p>
-        {% endfor %}
-        <button type="submit">Book</button>
-      </div>
-        <div class="row">
-        
-      </div>
-      </form>
-    {%endblock%}
-    </section>
-</body>
+      </p>
+      <p>
+        {% if booking.number_senior %}
+        <span class="heading">Senior: </span><span>{{ booking.number_senior }}</span>
+        {% endif %}
+      </p>
+      {% for i in seats %}
+      <span class="heading">Seat: </span><span>{{ i.ticket_id }}</span>
+      {% endfor %}
+      <br><br>
+      <p>
+        <span class="heading"> Price: </span><span>{{ price }}</span>
+      </p>
+    </div>
 
+
+<button style="width: 200px"><a href="{% url 'home2' %}">Return to Home</a></button>
+{% endblock %}
 </html>

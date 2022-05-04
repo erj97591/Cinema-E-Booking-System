@@ -37,9 +37,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./seats.html">Show Times</a>
-          </li>
+
 
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
             aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,13 +52,13 @@
                   Category
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Adventure</a></li>
-                  <li><a class="dropdown-item" href="#">Animation</a></li>
-                  <li><a class="dropdown-item" href="#">Comedy</a></li>
-                  <li><a class="dropdown-item" href="#">Drama</a></li>
-                  <li><a class="dropdown-item" href="#">Sci-Fi</a></li>
-                  <li><a class="dropdown-item" href="#">Thriller</a></li>
+                  <li><a class="dropdown-item" href="{% url 'action_movie' %}">Action</a></li>
+                  <li><a class="dropdown-item" href="{% url 'adventure_movie' %}">Adventure</a></li>
+                  <li><a class="dropdown-item" href="{% url 'animation_movie' %}">Animation</a></li>
+                  <li><a class="dropdown-item" href="{% url 'comedy_movie' %}">Comedy</a></li>
+                  <li><a class="dropdown-item" href="{% url 'drama_movie' %}">Drama</a></li>
+                  <li><a class="dropdown-item" href="{% url 'scifi_movie' %}">Sci-Fi</a></li>
+                  <li><a class="dropdown-item" href="{% url 'thriller_movie' %}">Thriller</a></li>
                 </ul>
               </li>
 

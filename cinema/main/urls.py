@@ -3,8 +3,12 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmVie
     PasswordResetCompleteView, PasswordChangeView, PasswordChangeDoneView
 from django.urls import path
 
+<<<<<<< Updated upstream
 from .views import registration_page, home_page, activation_sent_view, activate, login_page, home_page_loggedin, \
     profile_page, logout_page, add_payment, edit_profile_page, search_bar, movie_info, coming_soon, action_movie, adventure_movie, animation_movie, comedy_movie, drama_movie, scifi_movie, thriller_movie, book_movie, book_ticket, book_seat, checkout
+=======
+from .views import adventure_movie, animation_movie, book_movie, book_seat, book_ticket, checkout, checkout_confirm, comedy_movie, coming_soon, drama_movie, home_page, home_page_loggedin, movie_info, registration_page, activation_sent_view, activate, login_page, logout_page, profile_page, edit_profile_page, add_payment, scifi_movie, search_bar, action_movie, thriller_movie
+>>>>>>> Stashed changes
 
 
 
