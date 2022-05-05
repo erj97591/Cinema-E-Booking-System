@@ -12,23 +12,16 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.db.models import Q
 from .forms import RegistrationForm, PaymentForm, BookingForm, TicketForm
 from .forms import UserUpdateForm, ProfileUpdateForm
-from .models import Booking, PaymentCard, Movie, ShowTime, Ticket
+from .models import Booking, PaymentCard, Movie, ShowTime, Ticket, TicketType
 from .tokens import account_activation_token
 from django.views.generic import ListView
 from django.urls import reverse
 from urllib.parse import urlencode
 
-
-#def home_page(request):
-#    return render(request, 'main/homepage1.html')
 def home_page(request):
     obj = Movie.objects.all()
     smovies = obj.exclude(showtimes__isnull=True)
     cmovies = obj.filter(showtimes__isnull=True)
-    #playing = obj.filter()
-    #coming =
-    #filter(status="published")
-    #template_name = 'homepage1.html'
     context = {'smovies': smovies, 'cmovies' : cmovies}
     return render(request, 'main/homepage1.html', context)
 
@@ -43,9 +36,7 @@ def home_page_loggedin(request):
 
 def search_bar(request):
     if request.method == "GET":
-        #print(request.POST)
         search = request.GET.get('search')
-        #print(search)
         submitbutton = request.GET.get('submit')
         if search is not None:
             lookups= Q(title__icontains=search) | Q(category__icontains=search)
@@ -151,7 +142,6 @@ def book_ticket(request, slug):
             query_string =  urlencode({'booking': booking}) 
             url = '{}?{}'.format(base_url, query_string)
             return redirect(url, slug=slug)
-            #return redirect('book_seat', slug=slug)
     else:
         b_form = BookingForm()  
     context = {'b_form': b_form, 'showtime': showtime}
@@ -195,10 +185,44 @@ def checkout(request, slug):
     bookingvar = Booking.objects.get(booking_id = bookingid)
     number_seats = bookingvar.number_tickets()
     seats = Ticket.objects.filter(booking = bookingvar)
-    price = bookingvar.number_adult + bookingvar.number_child + bookingvar.number_senior
+    price = bookingvar.price()
     data = request.user.profile
     card = PaymentCard.objects.filter(user=request.user)
-    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card}
+    form = PaymentForm()
+    if request.method == 'POST':
+        print()
+        print()
+        print(request.POST)
+        print("aid")
+        print(request.POST.get('card_number'))
+        print()
+        print()
+        '''
+        if request.POST.get('card_number'):
+            form = PaymentForm(request.POST)
+            if form.is_valid():
+                PaymentCard = form.save(commit=False)
+                PaymentCard.card_number = form.cleaned_data.get('card_number')
+                PaymentCard.expiration_date = form.cleaned_data.get(
+                    'expiration_date')
+                PaymentCard.user = User.objects.get(pk=request.user.id)
+                PaymentCard.save()
+
+           '''     
+    if request.POST.get('selected') is not None:
+        base_url = reverse('checkout_confirm', kwargs={'slug': slug})
+        query_string = urlencode({'booking': bookingvar})
+        url = '{}?{}'.format(base_url, query_string)
+        return redirect(url, slug=slug)
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            paymentCard = form.save(commit=False)
+            paymentCard.card_number = form.cleaned_data.get('card_number')
+            paymentCard.expiration_date = form.cleaned_data.get(
+                'expiration_date')
+            paymentCard.user = User.objects.get(pk=request.user.id)
+            paymentCard.save()
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price, 'card': card, 'form': form}
     return render(request, 'main/checkout.html', context)
 
 def book_movie(request, slug):
@@ -208,6 +232,18 @@ def book_movie(request, slug):
     context = {'movie': movie, 'shows': shows}
     return render(request, 'main/book_movie.html', context)
 
+def checkout_confirm(request, slug):
+    context = {}
+    showtime = get_object_or_404(ShowTime, slug=slug)
+    tickets = Ticket.objects.filter(showtime=showtime)
+    bookingid = request.GET.get('booking')
+    bookingvar = Booking.objects.get(booking_id = bookingid)
+    number_seats = bookingvar.number_tickets()
+    seats = Ticket.objects.filter(booking = bookingvar)
+    price = bookingvar.price()
+    data = request.user.profile
+    context = {'tickets': tickets, 'booking': bookingvar, 'number_seats': number_seats, 'showtime': showtime, 'bookingid': bookingid, 'data': data, 'seats': seats, 'price': price}
+    return render(request, 'main/checkout_confirm.html', context)
 
 def activation_sent_view(request):
     return render(request, 'main/activation_sent.html')
@@ -289,7 +325,8 @@ def profile_page(request):  # Fetching data from DB to show user's complete prof
     form = RegistrationForm()
     data = request.user.profile
     card = PaymentCard.objects.filter(user=request.user)
-    context = {'form': form, 'data': data, 'card': card}
+    booking = Booking.objects.filter(user=request.user)
+    context = {'form': form, 'data': data, 'card': card, 'booking': booking}
     return render(request, 'main/myprofilepage.html', context)
 
 

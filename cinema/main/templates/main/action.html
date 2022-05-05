@@ -38,10 +38,6 @@
                 <a class="nav-link" href="{% url 'coming_soon' %}">Coming Soon</a>
               </li>
              
-              <li class="nav-item">
-                <a class="nav-link" href="./seats.html">Show Times</a>
-              </li>
-             
         
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown">
@@ -58,13 +54,10 @@
                   </ul>
                   </li>
             
-
-
-
-            <form class="d-flex" method="get" action="{% url 'search_bar' %}">
-              <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
-              <button class="btn1" type="submit">Search</button>
-            </form>    
+                  <form class="d-flex" method="get" action="{% url 'search_bar' %}">
+                    <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
+                    <button class="btn1" type="submit">Search</button>
+                  </form>    
 
             {% if not user.is_authenticated %}
             <li class="nav-item">

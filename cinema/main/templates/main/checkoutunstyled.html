@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+{% block page_content %}
+<p>Booking for {{ user.username }}</p>
+<p>Tickets for: {{ showtime.movie.title }}</p>
+<p> at {{ showtime.time }} on {{ showtime.date }}</p>
+Number of Tickets: {{ number_seats }}
+{% if booking.number_adult %}
+    adult: {{ booking.number_adult }}
+{% endif %}
+{% if booking.number_child %}
+    child: {{ booking.number_child }}
+{% endif %}
+{% if booking.number_senior %}
+    senior: {{ booking.number_senior }}
+{% endif %}
+
+<p>Seats selected:</p>
+{% for i in seats %}
+    <p>Seat: {{ i.ticket_id }}</p>
+{% endfor %}
+
+<p>Price: {{ price }}</p>
+
+
+{% if card %}
+
+{% if card.count < 3 %}
+  <p> Or Add a Payment </p>
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </p>
+              {% endfor %}
+              <button type="submit">Add</button>
+            </form>
+
+{% endif %}
+{% else %}
+  <p> Add a Payment </p>
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </p>
+              {% endfor %}
+              <button type="submit">Add</button>
+            </form>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <p>Select a method of payment:</p>
+        {% if card %}
+    <p> Your cards: </p>
+    {% for i in card %}
+    <input type = "checkbox" value = "{{ i.card_number }}" id = "{{ i.card_number }}" name="selected" >
+        {{ i.card_view }}
+    {% endfor %}
+    {% endif %}
+<button type="submit" >Submit Order</button>
+</form>
+{%endblock%}
+</html>

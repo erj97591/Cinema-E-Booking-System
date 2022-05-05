@@ -38,9 +38,6 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'home2' %}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./seats.html">Show Times</a>
-            </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
@@ -58,10 +55,10 @@
               </ul>
             </li>
 
-            <form class="d-flex">
-              <input class="form-control" type="search" placeholder="Movie name" aria-label="Search">
+            <form class="d-flex" method="get" action="{% url 'search_bar' %}">
+              <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
               <button class="btn1" type="submit">Search</button>
-            </form>
+            </form> 
             <li class="nav-item">
               <a class="nav-link" href="{% url 'profile_page' %}">My Profile</a>
             </li>

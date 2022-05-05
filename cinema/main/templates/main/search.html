@@ -18,27 +18,23 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <style>    
-      #booktickets, #cancel {
+      #booktickets{
   border-radius: 10px;
   background-color:black;
   border: none;
   color: #ffffff;
   text-align: center;
   font-size: 15px;
-  padding: 10px;
   width: 200px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
 }
-.bg_prim{
-background-image: linear-gradient(black, steelblue);
-}
+
 </style>
   </head>
-
-<body class="bg_prim">
-  <section style=" background-image: linear-gradient(black, steelblue); height: 1000px;">
+  <body>
+  <section style=" background-image: linear-gradient(black, steelblue); height: max-content;">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
           <img class="logo-image" src="{% static 'main./logo.jpg' %}" height="54" width="54">
@@ -53,10 +49,7 @@ background-image: linear-gradient(black, steelblue);
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'coming_soon' %}">Coming Soon</a>
               </li>
-             
-              <li class="nav-item">
-                <a class="nav-link" href="./seats.html">Show Times</a>
-             
+
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown">
                     Category
@@ -97,7 +90,7 @@ background-image: linear-gradient(black, steelblue);
       {% endif %}
 
           {% if smovies.all %} 
-            <h3 class="part1" id="now-showing">NOW PLAYING</h3>     
+            <h3 class="part1" style="margin-top: 5px;" id="now-showing">NOW PLAYING</h3>     
             {% for movie in smovies %}  
             <div class="row py-5">          
               <div class="col lg-4">
@@ -121,24 +114,25 @@ background-image: linear-gradient(black, steelblue);
         {% endif %}
 
         {% if cmovies.all %} 
-          <h3 class="part1">COMING SOON</h3>
+          <h3 class="part1" style="margin-top: 40px;">COMING SOON</h3>
           {% for movie in cmovies %} 
           <div class="row py-5">          
-            <div class="col lg-4">
-              <div class="card">
+            <div class="col sm-4">
+              <div class="card" style="margin-top: 40px;">
                 <a href=""><img src="{{ movie.picture.url }}" class="card-img-top" alt="..."></a>
                 <div class="card-body">
                   <a href="{% url 'movie_info' movie.slug %}" style="text-decoration: none;">
                     <h5 class="card-title">{{ movie.title }}</h5>
                     <h5 class="card-title">{{ movie.rating }}</h5>
                 </a>
-                </div>
-                <div class="btn2">
+                 <div class="btn2">
                   <a href="{% url 'movie_info' movie.slug %}" class="view-movie-button2">Info</a>
-                </div>                
+                </div>
+              </div>
+                               
               </div>
             </div>
-            <div class="col lg-4">{% video movie.trailer 'tiny' %}</div> 
+            <div class="col lg-4"  style="margin-top: 40px;">{% video movie.trailer 'tiny' %}</div> 
           </div>
           {% endfor %}
           {% endif %}

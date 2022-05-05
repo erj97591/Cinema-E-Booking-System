@@ -50,8 +50,6 @@ class Movie(models.Model):
     def isShowing(self):
         query = ShowTime.objects.filter(movie__title=self.title)
         if query :
-        #if Movie.showtime.exists():
-            #Showtime.objects.filter(movie__title=self.title)
             return True
         else:
             return False
@@ -67,7 +65,6 @@ class ShowTime(models.Model):
     time = models.TimeField(default=time(9,30,0))
     movie = models.ForeignKey(Movie, related_name='showtimes', on_delete=models.CASCADE)
     show_room = models.ForeignKey(ShowRoom, on_delete=models.CASCADE)
-    #slug = models.SlugField(null=True)
     slug = AutoSlugField(null=True, populate_from=['movie', 'date', 'time'])
     def __str__(self):
         return str(f'|{self.movie} {datetime.combine(self.date, self.time)}|')
@@ -110,22 +107,33 @@ class Promotion(models.Model):
         return str(self.promo_id)
 
 class Booking(models.Model):
-     #booking_id = models.IntegerField()
+
      booking_id = models.AutoField(primary_key=True)
-     #number_tickets = models.IntegerField()
      number_adult = models.IntegerField(null=True, blank=True, default="0")
      number_child = models.IntegerField(null=True, blank=True, default="0")
      number_senior = models.IntegerField(null=True, blank=True, default="0")
      booking_status = models.CharField(max_length=100, default = "inactive")
      showtime = models.ForeignKey(ShowTime, on_delete=models.CASCADE, null=True)
      user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-     #tickets = MultiSelectField(choices = )
+
 
      def __str__(self):
         return str(self.booking_id)
 
      def number_tickets(self):
         return self.number_adult + self.number_child + self.number_senior
+
+     def price(self):
+         if not TicketType.objects.all().exists():
+             TicketType().save()
+         pricing = TicketType.objects.first()
+         return pricing.child_price * self.number_child + \
+                pricing.adult_price * self.number_adult + \
+                pricing.senior_price * self.number_senior
+class TicketType(models.Model):
+    child_price = models.IntegerField(null=True, blank=True, default="5")
+    adult_price = models.IntegerField(null=True, blank=True, default="10")
+    senior_price = models.IntegerField(null=True, blank=True, default="15")
 
 class Ticket(models.Model):
     ticket_id = models.IntegerField()
@@ -141,6 +149,16 @@ class PaymentCard(models.Model):
     card_number = EncryptedIntegerField()
     expiration_date = EncryptedDateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    @property
+    def card_view(self):
+        card = str(self.card_number)
+        card = card[len(card) -4: len(card)]
+        card = '*****' + card
+        return card
+
+    @card_view.setter
+    def card_view(self, value):
+        self.card_number = value
 
     def __str__(self):
         return str(self.card_number)

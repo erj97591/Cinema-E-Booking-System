@@ -57,10 +57,7 @@ background-image: linear-gradient(black, steelblue);
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'coming_soon' %}">Coming Soon</a>
               </li>
-             
-              <li class="nav-item">
-                <a class="nav-link" href="./seats.html">Show Times</a>
-             
+
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown">
                     Category
@@ -78,16 +75,23 @@ background-image: linear-gradient(black, steelblue);
           
               {% csrf_token %}
              
-            <form class="d-flex" method="get" action="{% url 'search_bar' %}">
-              <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
-              <button class="btn1" type="submit">Search</button>
-            </form>  
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'profile_page' %}">My Profile</a>
-            </li>    
-            <li class="nav-item">
+              <form class="d-flex" method="get" action="{% url 'search_bar' %}">
+                <input class="form-control" name="search" type="search" placeholder="Movie name" aria-label="Search">
+                <button class="btn1" type="submit">Search</button>
+              </form> 
+              {% if not user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login_page' %}">Login</a>
+              </li>
+              {% endif %}
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile_page' %}">My Profile</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
               </li>
+              {% endif %}
             </ul>
           </div>    
           </div>
@@ -129,11 +133,8 @@ background-image: linear-gradient(black, steelblue);
   </div>
 
   {% if shows.all %}
-  <h1 style="text-align:center"> Showtimes</h1>
-                {% for i in shows %}
-                <a class="btn btn-success btn-block btn-lg gradient-custom-4 text-body mb-3" style="width: 400px" href='/booking/'>{{ i.date }}  {{i.time}}</a>
-
-                    {% endfor %}
+  <h1 style="text-align:center"> See Avaliable Showtimes</h1>
+        <a href="{% url 'book_movie' movie.slug %}" class="view-movie-button1">Book Tickets</a>
   {% endif %}
     </section>
         </body>
